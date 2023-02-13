@@ -16,7 +16,7 @@
 /coverage
 
 # Exclude compiled files
-/build
+/dist
 /scripts/stats.json
 /public/data/
 /public/imgs/stories/
