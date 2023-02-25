@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function MarkdownComponents({handleIfaceState, handleNavigate, text, components}) {
+export default function MarkdownComponents({text, components}) {
 
-  const xml = new DOMParser().parseFromString(text.substr(1, text.length -2),"text/xml");
+  const xml = new DOMParser().parseFromString(text.substring(1, text.length -2),"text/xml");
   const elm = xml && xml.firstElementChild;
   if(elm) {
     const {tagName, attributes, children} = elm;
@@ -20,7 +20,7 @@ export default function MarkdownComponents({handleIfaceState, handleNavigate, te
       }
       else {
         return <React.Suspense key="attachments" fallback="Загрузка...">
-          <Component handleIfaceState={handleIfaceState} handleNavigate={handleNavigate} {...props} />
+          <Component {...props} />
         </React.Suspense>;
       }
     }

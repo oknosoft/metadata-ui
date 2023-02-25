@@ -9,8 +9,8 @@
 const path = require('path');
 const fs = require('fs');
 const md5File = require('md5-file');
-const lpath = path.resolve(__dirname, './dist');
-const rpath = path.resolve(__dirname, './src');
+const lpath = path.resolve(__dirname, '../dist');
+const rpath = path.resolve(__dirname, '../src');
 
 function fromDir(startPath, filter, callback) {
 
@@ -35,7 +35,7 @@ function fromDir(startPath, filter, callback) {
 
 let copied;
 let i = 0;
-fromDir(rpath, /\.(css|md|woff2|svg|gif|png)$/, (rname) => {
+fromDir(rpath, /\.(css|md|woff2|svg|gif|png|json)$/, (rname) => {
   const name = rname.replace(rpath, '');
   const lame = path.join(lpath, name);
   if(!fs.existsSync(lame) || (md5File.sync(rname) != md5File.sync(lame))){

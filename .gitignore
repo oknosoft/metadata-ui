@@ -9,19 +9,12 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
 
 # testing
 /coverage
 
 # Exclude compiled files
 /dist
-/scripts/stats.json
-/public/data/
-/public/imgs/stories/
-/server/mdm/cache/
-!/server/mdm/cache/.gitkeep
 
 # misc
 .DS_Store

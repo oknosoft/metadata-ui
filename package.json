@@ -9,20 +9,14 @@
   },
   "directories": {},
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.8",
-    "dataframe": "2.0",
-    "marked": "^4.2",
-    "react-data-grid": "^7.0.0-beta.26"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20",
-    "@babel/core": "^7.20",
+    "@babel/cli": "^7.21",
+    "@babel/core": "^7.21",
     "@babel/plugin-transform-react-constant-elements": "^7.20",
     "@babel/preset-env": "^7.20",
     "@babel/preset-react": "^7.18",
-    "@babel/runtime": "^7.20",
+    "@babel/runtime": "^7.21",
     "babel-plugin-import": "^1.13",
     "babel-plugin-transform-react-remove-prop-types": "^0.4",
     "clsx": "^1.2",
@@ -30,6 +24,12 @@
     "md5-file": "^5.0"
   },
   "peerDependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.10",
+    "dataframe": "2.0",
+    "marked": "^4.2",
+    "react-data-grid": "^7.0.0-beta.26",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.0",
     "react": "^18.2",
@@ -39,9 +39,6 @@
   "scripts": {
     "build:ui": "cross-env NODE_ENV=production BABEL_ENV=es babel --config-file ./scripts/babel.config.js ./src --out-dir ./dist && node ./scripts/copy-files"
   },
-  "bin": {
-    "metadata": "./bin/metadata-cli.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/oknosoft/metadata-ui.git"
@@ -49,7 +46,7 @@
   "bugs": {
     "url": "https://github.com/oknosoft/metadata.js/issues"
   },
-  "homepage": "http://www.oknosoft.ru/metadata/",
+  "homepage": "http://oknosoft.ru/metadata/",
   "main": "dist",
   "keywords": [
     "metadata",

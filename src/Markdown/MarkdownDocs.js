@@ -9,18 +9,18 @@ import MarkdownComponents from './MarkdownComponents';
 import {getContents, getTitle, componentRegExp} from './parseMarkdown';
 
 export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr, canonical, footer,
-                               handleIfaceState, handleNavigate, TopButton, components = {}}) {
+                               setTitle, TopButton, components = {}}) {
 
   const contents = getContents(markdown);
-
   const ltitle = htitle || `${getTitle(markdown)}${subtitle ? ' - ' + subtitle : ''}`;
-  if (title != ltitle) {
-    React.useEffect(() => handleIfaceState({
-      component: '',
-      name: 'title',
-      value: ltitle,
-    }));
-  }
+
+  React.useEffect(() => {
+    if(ltitle) {
+      setTitle({
+        appTitle: <Typography variant="h6" noWrap component="div">{ltitle}</Typography>,
+      });
+    }
+  }, [markdown]);
 
   return (
     <Box mb={8}>
@@ -43,16 +43,12 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
         return content.match(componentRegExp) ?
           <MarkdownComponents
             key={`cm-${index}`}
-            handleNavigate={handleNavigate}
-            handleIfaceState={handleIfaceState}
             text={content}
             components={components}
           /> :
           <MarkdownElement
             key={`m-${index}`}
             title={title}
-            handleNavigate={handleNavigate}
-            handleIfaceState={handleIfaceState}
             text={content}
           />;
       })}
