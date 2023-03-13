@@ -14,7 +14,7 @@ const prevent = (e) => {
 };
 
 export function MarkdownElement(props) {
-  const { className, text, mdtitle, title, CustomBtn, ...other } = props;
+  const { className, text, mdtitle, title, CustomBtn, opt, ...other } = props;
   const classes = styles(useTheme());
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ export function MarkdownElement(props) {
       sx={classes.root}
       onClick={anchorCkick}
       title={mdtitle || title}
-      dangerouslySetInnerHTML={{__html: marked.parse(text)}}
+      dangerouslySetInnerHTML={{__html: marked.parse(text, opt)}}
       {...other}
     />
   );
@@ -46,8 +46,9 @@ export function MarkdownElement(props) {
 }
 
 MarkdownElement.propTypes = {
-  className: PropTypes.string,
-  text: PropTypes.string.isRequired,
+  className: PropTypes.string,        // css
+  text: PropTypes.string.isRequired,  // текст markdown
+  opt: PropTypes.object,              // параметры парсинга
 }
 
 export default MarkdownElement;

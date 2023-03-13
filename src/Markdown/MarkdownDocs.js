@@ -6,13 +6,20 @@ import Box from '@mui/material/Box';
 
 import MarkdownElement from './MarkdownElement';
 import MarkdownComponents from './MarkdownComponents';
-import {getContents, getTitle, componentRegExp} from './parseMarkdown';
+import {getContents, getHeaders, getTitle, componentRegExp} from './parseMarkdown';
 
 export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr, canonical, footer,
-                               setTitle, TopButton, components = {}}) {
+                               setTitle, TopButton, opt, components = {}}) {
 
   const contents = getContents(markdown);
-  const ltitle = htitle || `${getTitle(markdown)}${subtitle ? ' - ' + subtitle : ''}`;
+  let ltitle = htitle;
+  if(!ltitle) {
+    const headers = getHeaders(markdown);
+    ltitle = headers?.title;
+  }
+  if(!ltitle) {
+    ltitle = `${getTitle(markdown)}${subtitle ? ' - ' + subtitle : ''}`;
+  }
 
   React.useEffect(() => {
     if(ltitle) {
@@ -23,7 +30,7 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
   }, [markdown]);
 
   return (
-    <Box mb={8}>
+    <Box mt={1} ml={1} mb={8}>
       <Helmet title={ltitle}>
         <meta name="description" content={descr || h1} />
         {canonical && <link rel="canonical" href={canonical} />}
@@ -50,6 +57,7 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
             key={`m-${index}`}
             title={title}
             text={content}
+            opt={opt}
           />;
       })}
 
