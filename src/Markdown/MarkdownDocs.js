@@ -75,6 +75,7 @@ MarkdownDocs.propTypes = {
   h1: PropTypes.string,                 // заголовок статьи
   descr: PropTypes.string,              // html meta description
   footer: PropTypes.node,               // кнопки share соцсетей, прочие элементы в подвале
+  opt: PropTypes.object,                // параметры marked-парсера
 };
 
 export default MarkdownDocs;
