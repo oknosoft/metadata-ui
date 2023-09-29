@@ -1,0 +1,56 @@
+{
+  "name": "metadata-ui",
+  "description": "React UI components for metadata.js",
+  "version": "2.1.0-beta.1",
+  "author": "Evgeniy Malyarov <info@oknosoft.ru> (http://www.oknosoft.ru)",
+  "engines": {
+    "node": "^16.13",
+    "yarn": "1.22"
+  },
+  "directories": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.10",
+    "dataframe": "2.0",
+    "marked": "^4.2",
+    "react-data-grid": "^7.0.0-beta.26",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.0",
+    "react": "^18.2",
+    "react-dom": "^18.2"
+  },
+  "packageManager": "yarn@1.22.19",
+  "scripts": {
+    "build:ui": "cross-env NODE_ENV=production BABEL_ENV=es babel --config-file ./scripts/babel.config.js ./src --out-dir ./dist && node ./scripts/copy-files"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oknosoft/metadata-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oknosoft/metadata.js/issues"
+  },
+  "homepage": "http://oknosoft.ru/metadata/",
+  "main": "dist",
+  "keywords": [
+    "metadata",
+    "browser data engine",
+    "spa offline",
+    "couchdb",
+    "pouchdb",
+    "1c",
+    "1с",
+    "web сервис",
+    "клиент 1с",
+    "offline framework",
+    "offline data engine",
+    "rest client",
+    "CRDT",
+    "offline-first",
+    "replication"
+  ],
+  "license": "MIT"
+}
