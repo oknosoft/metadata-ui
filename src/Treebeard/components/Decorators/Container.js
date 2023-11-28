@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {VelocityComponent} from 'velocity-react';
+//import {VelocityComponent} from 'velocity-react';
 
 class Container extends PureComponent {
     renderToggle() {
@@ -11,12 +11,12 @@ class Container extends PureComponent {
         }
 
         return (
-            <VelocityComponent
+            <div
                 animation={animations.toggle.animation}
                 duration={animations.toggle.duration}
             >
                 {this.renderToggleDecorator()}
-            </VelocityComponent>
+            </div>
         );
     }
 
