@@ -32,9 +32,9 @@
     "clsx": "^2.0",
     "dataframe": "2.0",
     "hammerjs": "^2.0",
-    "marked": "^9.0",
+    "marked": "^10.0",
     "react": "^18.2",
-    "react-data-grid": "^7.0.0-beta.39",
+    "react-data-grid": "^7.0.0-beta.41",
     "react-dom": "^18.2",
     "react-treebeard": "^3.2.4"
   },
