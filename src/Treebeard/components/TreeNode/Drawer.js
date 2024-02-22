@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 //import {VelocityTransitionGroup} from 'velocity-react';
 
 const Drawer = ({restAnimationInfo, children}) => (
-    <div {...restAnimationInfo}>
+    <span {...restAnimationInfo}>
         {children}
-    </div>
+    </span>
 );
 
 Drawer.propTypes = {

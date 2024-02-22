@@ -11,12 +11,12 @@ class Container extends PureComponent {
         }
 
         return (
-            <div
+            <span
                 animation={animations.toggle.animation}
                 duration={animations.toggle.duration}
             >
                 {this.renderToggleDecorator()}
-            </div>
+            </span>
         );
     }
 
