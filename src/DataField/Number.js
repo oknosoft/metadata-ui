@@ -122,7 +122,7 @@ export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, o
 }
 
 export function NumberCell({row, column, onRowChange, onClose}) {
-  const obj = row.row;
+  const obj = row instanceof $p.classes.TabularSectionRow ? row : row.row;
   const fld = column.key;
   const [value, setValue] = React.useState(obj[fld]);
 
@@ -131,14 +131,11 @@ export function NumberCell({row, column, onRowChange, onClose}) {
     function TextEditor(porps) {
       return <input
         ref={autoFocusAndSelect}
-        className="rdg-text-editor tlmcuo07-0-0-beta-37"
+        className="rdg-text-editor tlmcuo07-0-0-beta-41"
         value={porps.value}
         onChange={({target}) => {
           setValue(target.value);
         }}
-        // onBlur={() => {
-        //   onClose(true);
-        // }}
         onKeyDown={(ev) => {
           const {key} = ev;
           if(key === 'Enter' || key === 'Tab') {
@@ -146,7 +143,7 @@ export function NumberCell({row, column, onRowChange, onClose}) {
             const v = parseFloat(value);
             if(!isNaN(v) && obj[fld] != v) {
               obj[fld] = v;
-              onRowChange({...row}, true);
+              onRowChange(row instanceof $p.classes.TabularSectionRow ? row : {...row}, true);
             }
             setValue(obj[fld]);
           }
@@ -168,19 +165,21 @@ export function NumberCell({row, column, onRowChange, onClose}) {
 
 export function NumberFormatter({row, column}) {
 
-  const [value, setValue] = React.useState(row.row[column.key]);
+  const obj = row instanceof $p.classes.TabularSectionRow ? row : row.row;
+
+  const [value, setValue] = React.useState(obj[column.key]);
 
   React.useEffect(() => {
     function update (curr, flds){
-      if(row.row.equals(curr)) {
-        setValue(row.row[column.key]);
+      if(obj.equals?.(curr) || curr === obj || curr === obj?._owner?._owner) {
+        setValue(obj[column.key]);
       }
     }
-    row.row._manager.on({update});
+    obj._manager.on({update, rows: update});
     return () => {
-      row.row._manager.off({update});
+      obj._manager.off({update, rows: update});
     };
-  }, [row.row, column.key]);
+  }, [obj, column.key]);
 
   return value;
 }
