@@ -24,7 +24,7 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
   React.useEffect(() => {
     if(ltitle) {
       setTitle({
-        appTitle: <Typography variant="h6" noWrap component="div">{ltitle}</Typography>,
+        appTitle: <Typography variant="h6" noWrap sx={{flex: 1}} component="div" >{ltitle}</Typography>,
       });
     }
   }, [markdown]);
