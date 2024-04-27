@@ -2,9 +2,9 @@ import React from 'react';
 import Autocomplete from './Autocomplete';
 import {onKeyUp} from './enterTab';
 
-export const getOptions = (obj, fld, meta) => {
+export const getOptions = (obj, fld, meta, value) => {
   return () => {
-    let mgr = obj._manager.value_mgr(obj, fld, meta.type);
+    let mgr = value?._manager || obj._manager.value_mgr(obj, fld, meta.type);
     if(Array.isArray(meta.list)) {
       const {utils} = $p;
       return meta.list.map((v) => utils.is_data_obj(v) ? v : mgr.get(v));
@@ -40,7 +40,7 @@ export default function RefField({obj, fld, meta, label, onChange, fullWidth=tru
     label = meta.synonym;
   }
 
-  const options = React.useMemo(getOptions(obj, fld, meta), [obj]);
+  const options = React.useMemo(getOptions(obj, fld, meta, value), [obj]);
 
   if(enterTab && !other.onKeyUp) {
     other.onKeyUp = onKeyUp;
