@@ -4,6 +4,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MUICheckbox from '@mui/material/Checkbox';
 
 export default function Checkbox({obj, fld, meta, label, onChange, inputProps, fullWidth=true, ...other}) {
+  if(!meta && obj && fld) {
+    meta = obj._metadata(fld);
+  }
   if(!label && meta) {
     label = meta.synonym;
   }

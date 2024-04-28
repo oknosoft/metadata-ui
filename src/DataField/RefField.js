@@ -12,8 +12,13 @@ export const getOptions = (obj, fld, meta, value) => {
     const res = [];
     const elmOnly = meta.choice_groups_elm === 'elm';
     for(const {name, path} of (meta.choice_params || [])) {
-      if(name === 'ref' && Array.isArray(path.in)) {
-        mgr = path.in;
+      if(name === 'ref') {
+        if(Array.isArray(path)) {
+          mgr = path.map(ref => mgr.get(ref));
+        }
+        else if(Array.isArray(path.in)) {
+          mgr = path.in.map(ref => mgr.get(ref));
+        }
         break;
       }
     }
