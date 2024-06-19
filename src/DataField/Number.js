@@ -96,7 +96,7 @@ export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, o
 
   React.useEffect(function listen() {
     function update (curr, flds){
-      if(curr === obj && fld in flds) {
+      if(curr === obj && (!flds || fld in flds)) {
         setValue(obj[fld]);
       }
     }

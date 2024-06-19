@@ -77,7 +77,7 @@ export default function RefField({obj, fld, meta, label, onChange, fullWidth=tru
 
   React.useEffect(() => {
     function update (curr, flds){
-      if(fld in flds && (curr === obj || obj.equals?.(curr))) {
+      if((!flds || fld in flds) && (curr === obj || obj.equals?.(curr))) {
         setValue(obj[fld]);
       }
     }
