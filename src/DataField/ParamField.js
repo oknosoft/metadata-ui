@@ -66,7 +66,7 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
       delete meta.list;
     }
   }
-  else {
+  if(!drow?.list) {
     // если нет умолчаний во вставке, используем связи
     const lnk_props = {obj, grid: {selection: {cnstr, inset}}};
     const links = param.params_links(lnk_props);
