@@ -34,11 +34,11 @@ class NodeHeader extends Component {
             onRightClickHeader,
             style,
         } = this.props;
-        const {active, children} = node;
+        const {active, children, nodeStyle} = node;
         const terminal = !children;
         let styles;
         if (active) {
-            styles = Object.assign(style, {container: {...style.link, ...style.activeLink}});
+            styles = Object.assign(style, {container: {...style.link, ...(nodeStyle?.activeLink || style.activeLink)}});
         } else {
             styles = style;
         }
