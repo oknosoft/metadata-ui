@@ -81,6 +81,9 @@ export default function RefField({obj, fld, meta, label, onChange, fullWidth=tru
         setValue(obj[fld]);
       }
     }
+    if(value !== obj[fld]) {
+      setValue(obj[fld]);
+    }
     obj._manager.on({update});
     return () => {
       obj._manager.off({update});
