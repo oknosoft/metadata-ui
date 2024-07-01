@@ -100,6 +100,9 @@ export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, o
         setValue(obj[fld]);
       }
     }
+    if(value !== obj[fld]) {
+      setValue(obj[fld]);
+    }
     const {_manager} = obj;
     if(_manager) {
       _manager.on({update});
