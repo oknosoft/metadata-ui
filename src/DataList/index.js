@@ -1,11 +1,11 @@
 import React from 'react';
 import {useMatches} from 'react-router-dom';
 import Typography from '@mui/material/Typography';
-import {useTitleContext} from '../../../_common/App';
-import TreeList from './TreeList';
+import {useTitleContext} from '../App/titleContext';
+//import TreeList from './TreeList';
 import FlatList from './FlatList';
 
-export default function DataList() {
+export default function DataList({Component}) {
 
   const [mgr, setMgr] = React.useState(null);
   const [stub, matches] = useMatches();
@@ -14,7 +14,7 @@ export default function DataList() {
 
   React.useEffect(() => {
     const parts = matches.pathname.split('/');
-    const mgr = $p[parts[1]]?.[parts[2]];
+    const mgr = $p.md.mgr(`${parts[1]}.${parts[2]}`);
     if(mgr) {
       const meta = mgr.metadata();
       const listName = `${meta.list_presentation || meta.synonym} (список)`;
@@ -28,6 +28,10 @@ export default function DataList() {
     return null;
   }
   const meta = mgr.metadata();
-  return (meta.hierarchical && meta.group_hierarchy) ? <TreeList mgr={mgr} meta={meta}/> : <FlatList mgr={mgr} meta={meta}/>;
+  if(!Component) {
+    Component = FlatList;
+  }
+  return <Component mgr={mgr} meta={meta}/>;
+  //return (meta.hierarchical && meta.group_hierarchy) ? <TreeList mgr={mgr} meta={meta}/> : <FlatList mgr={mgr} meta={meta}/>;
 
 }
