@@ -24,6 +24,9 @@ function toAttr(meta, other={}, readOnly) {
 }
 
 function actions({obj, fld, onChange, value, setValue}) {
+
+  const inputRef = React.createRef();
+
   const onKeyDown = (ev) => {
     const {key} = ev;
     if(key === 'Enter' || key === 'Tab') {
@@ -44,18 +47,23 @@ function actions({obj, fld, onChange, value, setValue}) {
 
   const onFocus = () => {
     setValue(obj[fld]);
-    //setTimeout(() => ref.current?.firstChild?.select(), 20);
+    setTimeout(() => inputRef.current?.firstChild?.select(), 20);
   };
 
   const handleChange = ({target}) => {
     setValue(target.value);
   };
 
-  return {onKeyDown, onBlur, onFocus, handleChange};
+  return {onKeyDown, onBlur, onFocus, handleChange, inputRef};
+}
+
+export function autoFocusAndSelect(input) {
+  input?.focus();
+  input?.select();
 }
 
 export function NumberFormatCustom(props) {
-  const { onChange, min, max, enterTab, ...other } = props;
+  const { onChange, min, max, enterTab, inputRef, ...other } = props;
 
   return (
     <NumericFormat
@@ -74,13 +82,9 @@ export function NumberFormatCustom(props) {
       decimalSeparator=","
       thousandSeparator={'\u00A0'}
       valueIsNumericString
+      getInputRef={inputRef}
     />
   );
-}
-
-export function autoFocusAndSelect(input) {
-  input?.focus();
-  input?.select();
 }
 
 export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, onChange, ...other}) {
@@ -92,7 +96,7 @@ export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, o
   }
   const {attr} = toAttr(meta, other, readOnly);
   const [value, setValue] = React.useState(obj[fld]);
-  const {onKeyDown, onBlur, onFocus, handleChange} = actions({obj, fld, onChange, value, setValue});
+  const {onKeyDown, onBlur, onFocus, handleChange, inputRef} = actions({obj, fld, onChange, value, setValue});
 
   React.useEffect(function listen() {
     function update (curr, flds){
@@ -119,6 +123,7 @@ export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, o
       onBlur={onBlur}
       onFocus={onFocus}
       customInput={Input}
+      inputRef={inputRef}
       {...other}
     />
   </FormControl>;
