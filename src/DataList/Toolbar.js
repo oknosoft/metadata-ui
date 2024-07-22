@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {Toolbar, HtmlTooltip} from '../App/styled';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -10,9 +9,11 @@ import CopyIcon from '@mui/icons-material/PostAdd';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/DriveFileRenameOutline';
+import {Toolbar, HtmlTooltip} from '../App/styled';
 
-export default function (props) {
-  const {selectionMode, meta} = props;
+export default function ({mgr, selectionMode, create, clone, open}) {
+
+
   return <Toolbar disableGutters>
     {selectionMode && <>
       <Button startIcon={<PlaylistAddCheckIcon/>} onClick={null}>Выбрать</Button>
@@ -25,13 +26,13 @@ export default function (props) {
       <IconButton disabled onClick={null}><DriveFileMoveOutlinedIcon/></IconButton>
     </HtmlTooltip>
     <HtmlTooltip title="Создать элемент">
-      <IconButton disabled onClick={null}><AddIcon/></IconButton>
+      <IconButton disabled onClick={create}><AddIcon/></IconButton>
     </HtmlTooltip>
     <HtmlTooltip title="Создать элемент копированием текущего">
-      <IconButton disabled onClick={null}><CopyIcon/></IconButton>
+      <IconButton disabled onClick={clone}><CopyIcon/></IconButton>
     </HtmlTooltip>
     <HtmlTooltip title="Изменить элемент">
-      <IconButton onClick={null}><EditIcon/></IconButton>
+      <IconButton onClick={open}><EditIcon/></IconButton>
     </HtmlTooltip>
   </Toolbar>;
 }
