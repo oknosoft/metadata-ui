@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-//import {VelocityComponent} from 'velocity-react';
 
 class Container extends PureComponent {
     renderToggle() {

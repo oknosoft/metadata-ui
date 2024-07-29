@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {castArray} from 'lodash';
 
 import defaultTheme from '../themes/default';
 import defaultAnimations from '../themes/animations';
@@ -30,7 +29,7 @@ const TreeBeard = (props) => {
   }
   const nodeStyle = {...defaultTheme.tree.node, ...style.tree.node};
   return <Ul style={{...defaultTheme.tree.base, ...style.tree.base}}>
-    {castArray(data).map((node, index) => (
+    {(Array.isArray(data) ? data : (data ? [data] : [])).map((node, index) => (
       <TreeNode
         {...{decorators, node, separateToggleEvent, onToggle, onClickHeader, onRightClickHeader, animations}}
         key={node.id || index}
