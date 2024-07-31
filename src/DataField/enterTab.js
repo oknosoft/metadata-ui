@@ -23,8 +23,8 @@ export const onKeyUp = (ev) => {
     const currentIndex = tabElements.findIndex(e => e === ev.target);
     // get the next element in the list ("%" will loop the index around to 0)
     const nextIndex = (currentIndex + 1) % tabElements.length;
-    tabElements[nextIndex].focus();
-    tabElements[nextIndex].select();
+    tabElements[nextIndex]?.focus?.();
+    tabElements[nextIndex]?.select?.();
     ev.defaultMuiPrevented = true;
   }
 };

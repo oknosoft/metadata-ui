@@ -7,11 +7,12 @@
  */
 
 import React from 'react';
+import qs from 'qs';
 import TextField from '@mui/material/TextField';
 // import InputRadio from './InputRadio';
 // import InputCheckbox from './InputCheckbox';
 
-export default {
+const dialogs = {
 
   /**
    * ### Инициализирует UI
@@ -340,3 +341,21 @@ export default {
   },
 
 };
+export default dialogs;
+
+export function plugin($p) {
+  const {md, utils, classes} = $p;
+  utils.prm = function prm() {
+    return qs.parse(location.search.replace('?',''));
+  };
+
+  $p.ui = {dialogs};
+
+  const {ResizeObserver: NativeObserver} = window;
+  window.ResizeObserver = class ResizeObserver extends NativeObserver {
+    constructor(callback) {
+      callback = utils.debounce(callback, 10);
+      super(callback);
+    }
+  };
+}

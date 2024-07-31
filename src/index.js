@@ -1,23 +1,11 @@
 
-import dialogs from './dialogs';
-import qs from 'qs';
+import {plugin} from './dialogs';
+
 
 export default function ui($p) {
 
-  const {md, utils, classes} = $p;
-  utils.prm = function prm() {
-    return qs.parse(location.search.replace('?',''));
-  };
-
-  $p.ui = {dialogs};
-
-  const {ResizeObserver: NativeObserver} = window;
-  window.ResizeObserver = class ResizeObserver extends NativeObserver {
-    constructor(callback) {
-      callback = utils.debounce(callback, 10);
-      super(callback);
-    }
-  };
+  const {utils, classes} = $p;
+  plugin($p);
 
   Object.defineProperties(classes.DataManager.prototype, {
 

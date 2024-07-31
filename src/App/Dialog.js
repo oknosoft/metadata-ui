@@ -33,7 +33,10 @@ export default function DraggableDialog({open, onClose, onOk, title, raw, childr
     {!raw ? <DialogActions>
       {actions || <>
         <Button autoFocus onClick={onClose}>Отмена</Button>
-        <Button onClick={onOk || onClose}>Ок</Button>
+        <Button onClick={() => {
+          onOk?.();
+          onClose();
+        }}>Ок</Button>
       </>}
     </DialogActions> : null}
   </Dialog>;

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import DialogContentText from '@mui/material/DialogContentText';
 import Dialog from './Dialog';
-import MarkdownElement from 'metadata-ui/Markdown/MarkdownElement';
+import MarkdownElement from '../Markdown/MarkdownElement';
 
-export default function Alert({text, title, html, markdown, Component, props, handleOk, open, initFullScreen, hide_btn, ...other}) {
+export default function Alert({text, title, html, markdown, Component, props, handleOk, open, initFullScreen, ...other}) {
   if(typeof text === 'string') {
     if(text.includes('<') && text.includes('/>')) {
       html = text;
@@ -21,7 +21,6 @@ export default function Alert({text, title, html, markdown, Component, props, ha
     initFullScreen={initFullScreen}
     title={title}
     onClose={handleOk}
-    actions={!hide_btn && [<Button key="ok" onClick={handleOk} color="primary">Ок</Button>]}
     {...other}
   >
     {text && <DialogContentText>{text}</DialogContentText>}
