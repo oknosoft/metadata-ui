@@ -9,7 +9,7 @@
 import React from 'react';
 import qs from 'qs';
 import TextField from '@mui/material/TextField';
-// import InputRadio from './InputRadio';
+import InputRadio from './DataField/InputRadio';
 // import InputCheckbox from './InputCheckbox';
 
 const dialogs = {
@@ -103,11 +103,10 @@ const dialogs = {
       };
 
       if(list) {
-        throw new Error('Not implemented');
-        /*
         if (type === "checkbox") {
-          value = list;
-          iface_state.value.children = <InputCheckbox list={list} />;
+          throw new Error('Not implemented');
+          //value = list;
+          //iface_state.value.children = <InputCheckbox list={list} />;
         }
         else {
           if (!initialValue) {
@@ -120,7 +119,6 @@ const dialogs = {
             handleChange={handleChange}
           />;
         }
-        */
       }
       else if(type.includes('.')) {
         value = initialValue ? (initialValue.ref || initialValue) : '';
@@ -174,7 +172,7 @@ const dialogs = {
         />;
       }
 
-      this.handleIfaceState(iface_state);
+      this.handleIfaceState({confirm: {...iface_state.value, ...other}});
 
     });
   },
