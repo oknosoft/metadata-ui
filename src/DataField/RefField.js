@@ -6,7 +6,7 @@ export const getOptions = (obj, fld, meta, value) => {
   const {utils} = $p;
   let mgr = value?._manager || obj._manager.value_mgr(obj, fld, meta.type);
   if(Array.isArray(meta.list)) {
-    return meta.list.map((v) => utils.is_data_obj(v) ? v : mgr.get(v));
+    return meta.list.map((v) => (utils.is ? utils.is.dataObj(v) : utils.is_data_obj(v)) ? v : mgr.get(v));
   }
   const res = [];
   const elmOnly = meta.choice_groups_elm === 'elm';
