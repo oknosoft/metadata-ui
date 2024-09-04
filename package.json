@@ -1,7 +1,7 @@
 {
   "name": "@oknosoft/ui",
   "description": "React UI components for metadata.js",
-  "version": "2.1.0-beta.1",
+  "version": "3.0.0-beta.1",
   "author": "Evgeniy Malyarov <info@oknosoft.ru> (http://www.oknosoft.ru)",
   "engines": {
     "node": ">=20.2",
@@ -11,8 +11,8 @@
   "directories": {},
   "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.24",
-    "@babel/core": "^7.24",
+    "@babel/cli": "^7.25",
+    "@babel/core": "^7.25",
     "@rollup/plugin-node-resolve": "^15.2",
     "@rollup/plugin-replace": "^5.0",
     "@babel/plugin-transform-react-constant-elements": "^7.25",
@@ -30,15 +30,15 @@
     "@emotion/react": "^11.13",
     "@emotion/styled": "^11.13",
     "@fontsource/roboto": "^5.0",
-    "@mui/icons-material": "^5.16",
-    "@mui/material": "^5.16",
+    "@mui/icons-material": "^6.0",
+    "@mui/material": "^6.0",
     "clsx": "^2.0",
     "dataframe": "2.0",
     "font-awesome": "4.7.0",
     "hammerjs": "^2.0",
     "marked": "^13.0",
     "react": "^18.3",
-    "react-data-grid": "^7.0.0-beta.44",
+    "react-data-grid": "^7.0.0-beta.46",
     "react-dom": "^18.3"
   },
   "scripts": {
