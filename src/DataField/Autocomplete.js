@@ -9,7 +9,7 @@ const getOptionLabel = (v) => v?.presentation || v?.name || v?.toString() || '';
  * @desc Это не совсем DataField.
  * Он не редактирует DataObj, но позволяет показать и выбрать из списка, значение DataObj
  */
-export default function Autocomplete({label, fullWidth, disableClearable, placeholder, labelProps, noBorder, ...other}) {
+export default function Autocomplete({label, fullWidth, disableClearable, placeholder, labelProps, noBorder, onClick, ...other}) {
 
   if(typeof disableClearable !== 'boolean') {
     disableClearable = true;
@@ -23,7 +23,7 @@ export default function Autocomplete({label, fullWidth, disableClearable, placeh
     closeText="Закрыть список"
     noOptionsText="Нет подходящих значений"
     getOptionLabel={getOptionLabel}
-    renderInput={(params) => <StyledInput {...params} labelProps={labelProps} fullWidth={fullWidth} label={label} placeholder={placeholder} noBorder={noBorder}/>}
+    renderInput={(params) => <StyledInput {...params} labelProps={labelProps} fullWidth={fullWidth} label={label} placeholder={placeholder} noBorder={noBorder} onClick={onClick}/>}
     //renderOption={(props, option, state) => <Typography key={option.ref} noWrap>{option.name}</Typography>}
     {...other}
   />;

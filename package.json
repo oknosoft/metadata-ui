@@ -29,14 +29,14 @@
   "peerDependencies": {
     "@emotion/react": "^11.13",
     "@emotion/styled": "^11.13",
-    "@fontsource/roboto": "^5.0",
-    "@mui/icons-material": "^6.0",
-    "@mui/material": "^6.0",
+    "@fontsource/roboto": "^5.1",
+    "@mui/icons-material": "^6.1",
+    "@mui/material": "^6.1",
     "clsx": "^2.0",
     "dataframe": "2.0",
     "font-awesome": "4.7.0",
     "hammerjs": "^2.0",
-    "marked": "^13.0",
+    "marked": "^14.1",
     "react": "^18.3",
     "react-data-grid": "^7.0.0-beta.46",
     "react-dom": "^18.3"
