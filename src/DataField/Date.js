@@ -77,7 +77,7 @@ export function DateCell({row, column, onRowChange, onClose}) {
   return <input
     type="date"
     ref={autoFocusAndSelect}
-    className="rdg-text-editor tlmcuo07-0-0-beta-41"
+    className="rdg-text-editor tlmcuo07-0-0-beta-47"
     value={value}
     onChange={({target}) => {
       setValue(target.value);
