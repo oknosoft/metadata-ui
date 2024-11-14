@@ -47,7 +47,7 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
   }
 
   // учтём дискретный ряд - он приоритетнее связей параметров
-  let oselect = types.length === 1 && ['cat.property_values', 'cat.characteristics'].includes(types[0]);
+  let oselect = types.includes('cat.property_values') || types.includes('cat.characteristics');
   const drow = inset?.product_params?.find({param});
   if(drow) {
     if(!hide){
@@ -97,7 +97,7 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
         });
       }
     }
-    else if(oselect && types[0] === 'cat.property_values') {
+    else if(oselect && types.includes('cat.property_values')) {
       meta.list = [];
       $p.cat.property_values.find_rows({owner: param}, (v) => {
         meta.list.push(v);
