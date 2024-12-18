@@ -11,6 +11,9 @@ export default function Checkbox({obj, fld, meta, label, onChange, inputProps, f
     label = meta.synonym;
   }
   const [value, setValue] = React.useState(obj[fld]);
+  React.useEffect(() => {
+    setValue(obj[fld]);
+  }, [obj]);
   const handleChange = ({target}) => {
     obj[fld] = target.checked;
     setValue(target.checked);
