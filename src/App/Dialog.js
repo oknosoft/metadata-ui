@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
+import Box from '@mui/material/Box';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -27,7 +28,9 @@ export default function DraggableDialog({open, onClose, onOk, title, raw, childr
     aria-labelledby="draggable-dialog-title"
     {...other}
   >
-    {title ? <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">{title}</DialogTitle> : null}
+    {title ? <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">{
+      typeof title === 'string' ? <Box sx={{p: 1}}>{title}</Box> : title
+    }</DialogTitle> : null}
     {raw ? children : null}
     {!raw ? <DialogContent>{children}</DialogContent> : null}
     {!raw ? <DialogActions>
