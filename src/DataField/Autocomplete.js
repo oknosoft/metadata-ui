@@ -1,5 +1,5 @@
 import React from 'react';
-import MuiAutocomplete from '@mui/material/Autocomplete';
+import MuiAutocomplete from '../Autocomplete';
 import StyledInput from './StyledInput';
 
 const getOptionLabel = (v) => v?.presentation || v?.name || v?.toString() || '';
@@ -16,12 +16,7 @@ export default function Autocomplete({label, fullWidth, disableClearable, placeh
   }
 
   return <MuiAutocomplete
-    disableListWrap
     disableClearable={disableClearable}
-    clearText="Очистить"
-    openText="Показать список"
-    closeText="Закрыть список"
-    noOptionsText="Нет подходящих значений"
     getOptionLabel={getOptionLabel}
     renderInput={(params) => <StyledInput {...params} labelProps={labelProps} fullWidth={fullWidth} label={label} placeholder={placeholder} noBorder={noBorder} onClick={onClick}/>}
     //renderOption={(props, option, state) => <Typography key={option.ref} noWrap>{option.name}</Typography>}
