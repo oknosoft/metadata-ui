@@ -12,12 +12,12 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
+import Link from '@mui/material/Link';
 import inputClasses from '@mui/material/Input/inputClasses';
 import inputBaseClasses from '@mui/material/InputBase/inputBaseClasses';
-import outlinedInputClasses from '@mui/material/OutlinedInput/outlinedInputClasses';
-import filledInputClasses from '@mui/material/FilledInput/filledInputClasses';
 import ClearIcon from '@mui/material/internal/svg-icons/Close';
-import ListIcon from '@mui/icons-material/List';
+//import ListIcon from '@mui/icons-material/List';
+import ListIcon from '@mui/icons-material/MoreHoriz';
 import ArrowDropDownIcon from '@mui/material/internal/svg-icons/ArrowDropDown';
 import { styled } from '@mui/material/zero-styled';
 import memoTheme from '@mui/material/utils/memoTheme';
@@ -34,6 +34,7 @@ const useUtilityClasses = (ownerState) => {
     focused,
     fullWidth,
     hasClearIcon,
+    hasOpenListIcon,
     hasPopupIcon,
     inputFocused,
     popupOpen,
@@ -48,6 +49,7 @@ const useUtilityClasses = (ownerState) => {
       fullWidth && 'fullWidth',
       hasClearIcon && 'hasClearIcon',
       hasPopupIcon && 'hasPopupIcon',
+      hasOpenListIcon && 'hasOpenListIcon',
     ],
     inputRoot: ['inputRoot'],
     input: ['input', inputFocused && 'inputFocused'],
@@ -73,7 +75,7 @@ const AutocompleteRoot = styled('div', {
   slot: 'Root',
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
-    const { fullWidth, hasClearIcon, hasPopupIcon, inputFocused, size } = ownerState;
+    const { fullWidth, hasClearIcon, hasOpenListIcon, hasPopupIcon, inputFocused, size } = ownerState;
 
     return [
       { [`& .${autocompleteClasses.tag}`]: styles.tag },
@@ -85,6 +87,7 @@ const AutocompleteRoot = styled('div', {
       fullWidth && styles.fullWidth,
       hasPopupIcon && styles.hasPopupIcon,
       hasClearIcon && styles.hasClearIcon,
+      hasOpenListIcon && styles.hasOpenListIcon,
     ];
   },
 })({
@@ -108,6 +111,12 @@ const AutocompleteRoot = styled('div', {
     [`.${autocompleteClasses.hasPopupIcon}.${autocompleteClasses.hasClearIcon}&`]: {
       paddingRight: 52 + 4,
     },
+    [`.${autocompleteClasses.hasPopupIcon}&, .${autocompleteClasses.hasOpenListIcon}&`]: {
+      paddingRight: 26 + 4,
+    },
+    [`.${autocompleteClasses.hasPopupIcon}.${autocompleteClasses.hasOpenListIcon}&`]: {
+      paddingRight: 52 + 4,
+    },
     [`& .${autocompleteClasses.input}`]: {
       width: 0,
       minWidth: 30,
@@ -124,69 +133,8 @@ const AutocompleteRoot = styled('div', {
       padding: '2px 4px 3px 0',
     },
   },
-  [`& .${outlinedInputClasses.root}`]: {
-    padding: 9,
-    [`.${autocompleteClasses.hasPopupIcon}&, .${autocompleteClasses.hasClearIcon}&`]: {
-      paddingRight: 26 + 4 + 9,
-    },
-    [`.${autocompleteClasses.hasPopupIcon}.${autocompleteClasses.hasClearIcon}&`]: {
-      paddingRight: 52 + 4 + 9,
-    },
-    [`& .${autocompleteClasses.input}`]: {
-      padding: '7.5px 4px 7.5px 5px',
-    },
-    [`& .${autocompleteClasses.endAdornment}`]: {
-      right: 9,
-    },
-  },
-  [`& .${outlinedInputClasses.root}.${inputBaseClasses.sizeSmall}`]: {
-    // Don't specify paddingRight, as it overrides the default value set when there is only
-    // one of the popup or clear icon as the specificity is equal so the latter one wins
-    paddingTop: 6,
-    paddingBottom: 6,
-    paddingLeft: 6,
-    [`& .${autocompleteClasses.input}`]: {
-      padding: '2.5px 4px 2.5px 8px',
-    },
-  },
-  [`& .${filledInputClasses.root}`]: {
-    paddingTop: 19,
-    paddingLeft: 8,
-    [`.${autocompleteClasses.hasPopupIcon}&, .${autocompleteClasses.hasClearIcon}&`]: {
-      paddingRight: 26 + 4 + 9,
-    },
-    [`.${autocompleteClasses.hasPopupIcon}.${autocompleteClasses.hasClearIcon}&`]: {
-      paddingRight: 52 + 4 + 9,
-    },
-    [`& .${filledInputClasses.input}`]: {
-      padding: '7px 4px',
-    },
-    [`& .${autocompleteClasses.endAdornment}`]: {
-      right: 9,
-    },
-  },
-  [`& .${filledInputClasses.root}.${inputBaseClasses.sizeSmall}`]: {
-    paddingBottom: 1,
-    [`& .${filledInputClasses.input}`]: {
-      padding: '2.5px 4px',
-    },
-  },
   [`& .${inputBaseClasses.hiddenLabel}`]: {
     paddingTop: 8,
-  },
-  [`& .${filledInputClasses.root}.${inputBaseClasses.hiddenLabel}`]: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    [`& .${autocompleteClasses.input}`]: {
-      paddingTop: 16,
-      paddingBottom: 17,
-    },
-  },
-  [`& .${filledInputClasses.root}.${inputBaseClasses.hiddenLabel}.${inputBaseClasses.sizeSmall}`]: {
-    [`& .${autocompleteClasses.input}`]: {
-      paddingTop: 8,
-      paddingBottom: 9,
-    },
   },
   [`& .${autocompleteClasses.input}`]: {
     flexGrow: 1,
@@ -246,6 +194,7 @@ const AutocompleteClearIndicator = styled(IconButton, {
   marginRight: -2,
   padding: 4,
   visibility: 'hidden',
+  borderRadius: 'unset',
 });
 
 const AutocompleteOpenListIndicator = styled(IconButton, {
@@ -254,7 +203,8 @@ const AutocompleteOpenListIndicator = styled(IconButton, {
   overridesResolver: (props, styles) => styles.openListIndicator,
 })({
   marginRight: -2,
-  padding: 4,
+  padding: '8px 4px 0 4px',
+  borderRadius: 'unset',
 });
 
 const AutocompletePopupIndicator = styled(IconButton, {
@@ -268,6 +218,7 @@ const AutocompletePopupIndicator = styled(IconButton, {
 })({
   padding: 2,
   marginRight: -2,
+  borderRadius: 'unset',
   variants: [
     {
       props: { popupOpen: true },
@@ -311,7 +262,7 @@ const AutocompletePaper = styled(Paper, {
 })(
   memoTheme(({ theme }) => ({
     ...theme.typography.body1,
-    overflow: 'auto',
+    overflow: 'hidden',
   })),
 );
 
@@ -542,6 +493,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
 
   const hasClearIcon = !disableClearable && !disabled && dirty && !readOnly;
   const hasPopupIcon = (!freeSolo || forcePopupIcon === true) && forcePopupIcon !== false;
+  const hasOpenListIcon = Boolean(openList);
 
   const { onMouseDown: handleInputMouseDown } = getInputProps();
   const { ref: listboxRef, ...otherListboxProps } = getListboxProps();
@@ -555,6 +507,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     fullWidth,
     getOptionLabel,
     hasClearIcon,
+    hasOpenListIcon,
     hasPopupIcon,
     inputFocused: focusedTag === -1,
     popupOpen,
@@ -730,7 +683,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
                     </AutocompleteClearIndicator>
                   ) : null}
 
-                  {openList ? <AutocompleteOpenListIndicator
+                  {hasOpenListIcon ? <AutocompleteOpenListIndicator
                     aria-label={openListText}
                     title={openListText}
                   >
@@ -799,17 +752,18 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
                 })}
               </ListboxSlot>
             ) : null}
-            {openList ? <div onMouseDown={(event) => {
+            {hasOpenListIcon ? <div onMouseDown={(event) => {
               // Prevent blur
               event.preventDefault();
             }}>
-              <AutocompleteOpenListIndicator
+              <Link
                 aria-label={openListText}
                 title={openListText}
                 onClick={openList}
+                sx={{p: 1, cursor: 'pointer', lineHeight: 2}}
               >
-                <ListIcon />
-              </AutocompleteOpenListIndicator>
+                Список
+              </Link>
             </div> : null}
           </AutocompletePaper>
         </AutocompletePopper>
