@@ -4,7 +4,7 @@ import {NumberFormatter, NumberCell} from './Number';
 import {PresentationFormatter} from './RefField';
 import RefCell from './RefCell';
 
-export function dataFieldFlugin() {
+export function dataFieldPlugin() {
 
   Object.assign(  $p.ui, {
     editors: {

@@ -21,7 +21,7 @@ const dialogs = {
   init ({handleIfaceState, handleNavigate, DataList}) {
     Object.assign(this, {handleIfaceState, handleNavigate, DataList});
     return import('./DataField/plugin')
-      .then(({dataFieldFlugin}) => dataFieldFlugin());
+      .then(({dataFieldPlugin}) => dataFieldPlugin());
   },
 
   close_confirm(name = 'confirm') {
