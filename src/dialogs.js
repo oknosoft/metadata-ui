@@ -10,7 +10,6 @@ import React from 'react';
 import qs from 'qs';
 import TextField from '@mui/material/TextField';
 import InputRadio from './DataField/InputRadio';
-// import InputCheckbox from './InputCheckbox';
 
 const dialogs = {
 
@@ -21,6 +20,8 @@ const dialogs = {
    */
   init ({handleIfaceState, handleNavigate, DataList}) {
     Object.assign(this, {handleIfaceState, handleNavigate, DataList});
+    return import('./DataField/plugin')
+      .then(({dataFieldFlugin}) => dataFieldFlugin());
   },
 
   close_confirm(name = 'confirm') {

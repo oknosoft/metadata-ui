@@ -5,7 +5,7 @@ import Input from '@mui/material/Input';
 import {onKeyUp} from './enterTab';
 import {autoFocusAndSelect} from './Number';
 
-const {utils, classes} = $p;
+const {utils} = $p;
 
 const format = (value) => utils.moment(value).format('YYYY-MM-DD');
 
@@ -50,7 +50,7 @@ export default function Date({obj, fld, meta, label, labelProps, value, onChange
 
 export function DateFormatter({row, column}) {
 
-  const obj = row instanceof classes.TabularSectionRow ? row : row.row;
+  const obj = utils.is.tsRow(row) ? row : row.row;
 
   const [value, setValue] = React.useState(format(obj[column.key]));
 
@@ -70,7 +70,7 @@ export function DateFormatter({row, column}) {
 }
 
 export function DateCell({row, column, onRowChange, onClose}) {
-  const obj = row instanceof classes.TabularSectionRow ? row : row.row;
+  const obj = utils.is.tsRow(row) ? row : row.row;
   const fld = column.key;
   const [value, setValue] = React.useState(obj[fld]);
 
@@ -86,7 +86,7 @@ export function DateCell({row, column, onRowChange, onClose}) {
       const {key} = ev;
       if(key === 'Enter' || key === 'Tab') {
         obj[fld] = value;
-        onRowChange(row instanceof classes.TabularSectionRow ? row : {...row}, true);
+        onRowChange(utils.is.tsRow(row) ? row : {...row}, true);
         setValue(obj[fld]);
       }
     }}

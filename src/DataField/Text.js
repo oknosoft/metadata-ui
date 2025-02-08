@@ -5,6 +5,8 @@ import Input from '@mui/material/Input';
 import {onKeyUp} from './enterTab';
 import {autoFocusAndSelect} from './Number';
 
+const {utils} = $p;
+
 export default function Text({obj, fld, meta, label, labelProps, value, onChange, inputProps, fullWidth=true, enterTab, slotProps, ...other}) {
   if((typeof value !== 'string') && obj && fld) {
     value = obj[fld];
@@ -49,7 +51,7 @@ export default function Text({obj, fld, meta, label, labelProps, value, onChange
 
 export function TextFormatter({row, column}) {
 
-  const obj = row instanceof $p.classes.TabularSectionRow ? row : row.row;
+  const obj = utils.is.tsRow(row) ? row : row.row;
 
   const [value, setValue] = React.useState(obj[column.key]);
 
@@ -69,7 +71,7 @@ export function TextFormatter({row, column}) {
 }
 
 export function TextCell({row, column, onRowChange, onClose}) {
-  const obj = row instanceof $p.classes.TabularSectionRow ? row : row.row;
+  const obj = utils.is.tsRow(row) ? row : row.row;
   const fld = column.key;
   const [value, setValue] = React.useState(obj[fld]);
 
@@ -84,7 +86,7 @@ export function TextCell({row, column, onRowChange, onClose}) {
       const {key} = ev;
       if(key === 'Enter' || key === 'Tab') {
         obj[fld] = value;
-        onRowChange(row instanceof $p.classes.TabularSectionRow ? row : {...row}, true);
+        onRowChange(utils.is.tsRow(row) ? row : {...row}, true);
         setValue(obj[fld]);
       }
     }}
