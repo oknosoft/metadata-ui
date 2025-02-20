@@ -14,7 +14,7 @@ export function dataFieldPlugin() {
     },
     formatters: {
       Text: TextFormatter,
-      Presentat: PresentationFormatter,
+      Presentation: PresentationFormatter,
       Number: NumberFormatter,
     },
   });
