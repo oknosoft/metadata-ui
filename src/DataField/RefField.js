@@ -88,7 +88,7 @@ export default function RefField({obj, fld, meta, label, onChange, fullWidth=tru
     return () => {
       obj._manager.off({update});
     };
-  }, [obj]);
+  }, [obj, fld]);
 
   const options = getOptions(obj, fld, meta, value);
 
