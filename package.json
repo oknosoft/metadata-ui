@@ -30,7 +30,7 @@
   "peerDependencies": {
     "@emotion/react": "^11.14",
     "@emotion/styled": "^11.14",
-    "@fontsource/roboto": "^5.1",
+    "@fontsource/roboto": "^5.2",
     "@mui/icons-material": "^6.4",
     "@mui/material": "^6.4",
     "clsx": "^2.0",

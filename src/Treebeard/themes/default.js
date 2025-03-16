@@ -49,7 +49,8 @@ export default {
         base: {
           display: 'inline-block',
           verticalAlign: 'top',
-          color: '#333333'
+          color: '#333333',
+          width: '100%',
         },
         connector: {
           width: '2px',
