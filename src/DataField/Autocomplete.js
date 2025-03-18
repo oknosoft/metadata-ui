@@ -11,7 +11,7 @@ export default function Autocomplete({label, fullWidth, placeholder, labelProps,
 
 
   return <MuiAutocomplete
-    renderInput={(params) => <StyledInput {...params} label={label} fullWidth={fullWidth} placeholder={placeholder} labelProps={labelProps}  noBorder={noBorder} onClick={onClick}/>}
+    renderInput={(params) => <StyledInput {...params} label={label} fullWidth={fullWidth} placeholder={placeholder} labelProps={labelProps}  classes={{noBorder}} onClick={onClick}/>}
     //renderOption={(props, option, state) => <Typography key={option.ref} noWrap>{option.name}</Typography>}
     //open={Boolean(other.openList)}
     {...other}
