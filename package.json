@@ -39,9 +39,9 @@
     "font-awesome": "4.7.0",
     "hammerjs": "^2.0",
     "marked": "^15.0",
-    "react": "^18.3",
-    "react-data-grid": "^7.0.0-beta.47",
-    "react-dom": "^18.3"
+    "react": "^19.0",
+    "react-data-grid": "7.0.0-beta.50",
+    "react-dom": "^19.0"
   },
   "scripts": {
     "build:ui": "cross-env NODE_ENV=production BABEL_ENV=es babel --config-file ./scripts/babel.config.js ./src --out-dir ./dist && node ./scripts/copy-files"
