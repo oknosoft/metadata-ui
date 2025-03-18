@@ -29,7 +29,7 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
   }
   const {types} = meta.type;
 
-  if(!meta.type.is_ref) {
+  if(!meta.type.is_ref || (types.length === 2 && types.includes('cat.values_options'))) {
     let Component;
     if(types.includes('boolean')) {
       Component = Checkbox;
@@ -43,7 +43,10 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
     if(Component) {
       return <Component obj={obj} meta={meta} fld={fld} fullWidth={fullWidth} {...other} />;
     }
-    hide = true;
+    const type = types.find(v => v!== 'cat.values_options');
+    if(!type || !type.includes('.')) {
+      hide = true;
+    }
   }
 
   // учтём дискретный ряд - он приоритетнее связей параметров
