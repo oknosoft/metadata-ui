@@ -27,11 +27,15 @@ function fromDir(startPath, filter, callback) {
     }
     const stat = fs.lstatSync(filename);
     if(stat.isDirectory()) {
+      const lame = path.join(lpath, filename.replace(rpath, ''));
+      if(!fs.existsSync(lame)) {
+        fs.mkdirSync(lame);
+      }
       fromDir(filename, filter, callback); //recurse
     }
     else if(filter.test(filename)) callback(filename);
-  };
-};
+  }
+}
 
 let copied;
 let i = 0;
