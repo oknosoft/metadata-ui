@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import RefField from 'metadata-ui/DataField/RefField';
 
 export default function DialogCreate({raw, obj, fld, handleClose, handleSubmit}) {
-  const curr = raw[0];
+  const {value, data: {inn, ogrn, ogrn_date, address}} = raw[0];
   return <Dialog
     open
     fullWidth
@@ -17,10 +17,10 @@ export default function DialogCreate({raw, obj, fld, handleClose, handleSubmit})
       <Button onClick={handleSubmit}>Создать</Button>
     </>}
   >
-    <DialogContentText>{`Создать контрагента '${curr.value}'?`}</DialogContentText>
-    <DialogContentText>{`ИНН: ${curr.data.inn}`}</DialogContentText>
-    <DialogContentText>{`ОГРН: ${curr.data.ogrn} от ${new Date(1251676800000).toLocaleDateString(curr.data.ogrn_date)}`}</DialogContentText>
-    <DialogContentText>{`Адрес: ${curr.data.address.unrestricted_value}`}</DialogContentText>
+    <DialogContentText>{`Создать контрагента '${value}'?`}</DialogContentText>
+    <DialogContentText>{`ИНН: ${inn}`}</DialogContentText>
+    <DialogContentText>{`ОГРН: ${ogrn} от ${new Date(ogrn_date).toLocaleDateString()}`}</DialogContentText>
+    <DialogContentText>{`Адрес: ${address?.unrestricted_value}`}</DialogContentText>
     {obj? <>
       <hr/>
       <DialogContentText>{`Уточните организацию для основного договора`}</DialogContentText>

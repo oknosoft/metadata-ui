@@ -23,7 +23,7 @@ export default function Autocomplete({label, fullWidth, disableClearable, placeh
     closeText="Закрыть список"
     noOptionsText="Нет подходящих значений"
     getOptionLabel={getOptionLabel}
-    renderInput={(params) => <StyledInput {...params} labelProps={labelProps} fullWidth={fullWidth} label={label} placeholder={placeholder} noBorder={noBorder}/>}
+    renderInput={(params) => <StyledInput {...params} labelProps={labelProps} fullWidth={fullWidth} label={label} placeholder={placeholder} classes={{noBorder}}/>}
     //renderOption={(props, option, state) => <Typography key={option.ref} noWrap>{option.name}</Typography>}
     {...other}
   />;
