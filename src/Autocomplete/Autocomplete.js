@@ -5,6 +5,9 @@ import clsx from 'clsx';
 import integerPropType from '@mui/utils/integerPropType';
 import chainPropTypes from '@mui/utils/chainPropTypes';
 import composeClasses from '@mui/utils/composeClasses';
+import {unstable_memoTheme as memoTheme} from '@mui/system';
+import {capitalize} from '@mui/material/utils';
+import useSlot from './useSlot';
 import { alpha } from '@mui/system/colorManipulator';
 import useAutocomplete, { createFilterOptions } from '@mui/material/useAutocomplete';
 import Popper from '@mui/material/Popper';
@@ -13,18 +16,15 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import Link from '@mui/material/Link';
-import inputClasses from '@mui/material/Input/inputClasses';
-import inputBaseClasses from '@mui/material/InputBase/inputBaseClasses';
-import ClearIcon from '@mui/material/internal/svg-icons/Close';
+import {inputClasses} from '@mui/material/Input';
+import {inputBaseClasses} from '@mui/material/InputBase';
 //import ListIcon from '@mui/icons-material/List';
 import ListIcon from '@mui/icons-material/MoreHoriz';
-import ArrowDropDownIcon from '@mui/material/internal/svg-icons/ArrowDropDown';
+import ClearIcon from '@mui/icons-material/Close';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/zero-styled';
-import memoTheme from '@mui/material/utils/memoTheme';
 import { useDefaultProps } from '@mui/material/DefaultPropsProvider';
 import autocompleteClasses, { getAutocompleteUtilityClass } from './autocompleteClasses';
-import capitalize from '@mui/material/utils/capitalize';
-import useSlot from '@mui/material/utils/useSlot';
 
 const useUtilityClasses = (ownerState) => {
   const {
