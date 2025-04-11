@@ -34,7 +34,7 @@
     "@fontsource/roboto": "^5.2",
     "@mui/icons-material": "^7.0",
     "@mui/material": "^7.0",
-    "clsx": "^2.0",
+    "clsx": "^2.1",
     "dataframe": "2.0",
     "font-awesome": "4.7.0",
     "hammerjs": "^2.0",
