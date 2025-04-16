@@ -27,15 +27,11 @@ const FooterIndicator = styled(IconButton, {
   borderRadius: 'unset',
 });
 
-const stub = () => alert('openList');
+
 const openText = 'Открыть форму элемента';
 const openIcon = <OpenInBrowserIcon/>;
 
-export function AutocompleteFooter({openList, openListText, getClearProps, clearText, ownerState, clearIcon}) {
-
-  if(openList && typeof openList !== 'function') {
-    openList = stub;
-  }
+export function AutocompleteFooter({openList, openObj, openListText, getClearProps, clearText, ownerState, clearIcon}) {
 
   return <FooterRoot onMouseDown={(event) => {
     // Prevent blur
@@ -60,6 +56,7 @@ export function AutocompleteFooter({openList, openListText, getClearProps, clear
     <FooterIndicator
       aria-label={openText}
       title={openText}
+      onClick={openObj}
     >
       {openIcon}
     </FooterIndicator>

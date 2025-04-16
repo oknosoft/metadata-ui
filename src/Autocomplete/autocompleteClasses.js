@@ -79,6 +79,7 @@ const autocompleteClasses = generateUtilityClasses('MuiAutocomplete', [
   'inputFocused',
   'endAdornment',
   'clearIndicator',
+  'openListIndicator',
   'popupIndicator',
   'popupIndicatorOpen',
   'popper',

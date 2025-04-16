@@ -26,6 +26,8 @@ import { styled } from '@mui/material/zero-styled';
 import { useDefaultProps } from '@mui/material/DefaultPropsProvider';
 import autocompleteClasses, { getAutocompleteUtilityClass } from './autocompleteClasses';
 import {AutocompleteFooter} from './Footer';
+import {openHandlers} from './openHandlers';
+import {virtualize} from './Virtualization';
 
 const useUtilityClasses = (ownerState) => {
   const {
@@ -57,6 +59,7 @@ const useUtilityClasses = (ownerState) => {
     tag: ['tag', `tagSize${capitalize(size)}`],
     endAdornment: ['endAdornment'],
     clearIndicator: ['clearIndicator'],
+    openListIndicator: ['openListIndicator'],
     popupIndicator: ['popupIndicator', popupOpen && 'popupIndicatorOpen'],
     popper: ['popper', disablePortal && 'popperDisablePortal'],
     paper: ['paper'],
@@ -96,9 +99,15 @@ const AutocompleteRoot = styled('div', {
   [`&.${autocompleteClasses.focused} .${autocompleteClasses.clearIndicator}`]: {
     visibility: 'visible',
   },
+  [`&.${autocompleteClasses.focused} .${autocompleteClasses.openListIndicator}`]: {
+    visibility: 'visible',
+  },
   /* Avoid double tap issue on iOS */
   '@media (pointer: fine)': {
     [`&:hover .${autocompleteClasses.clearIndicator}`]: {
+      visibility: 'visible',
+    },
+    [`&:hover .${autocompleteClasses.openListIndicator}`]: {
       visibility: 'visible',
     },
   },
@@ -206,6 +215,7 @@ const AutocompleteOpenListIndicator = styled(IconButton, {
 })({
   marginRight: -2,
   padding: '8px 4px 0 4px',
+  visibility: 'hidden',
   borderRadius: 'unset',
 });
 
@@ -391,7 +401,7 @@ const defaultGetOptionLabel = (v) => {
 };
 
 const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiAutocomplete' });
+  const props = useDefaultProps({ props: virtualize(inProps), name: 'MuiAutocomplete' });
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const {
@@ -442,7 +452,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     onOpen,
     open,
     openOnFocus = false,
-    openListText = 'Выбор в форме списка',
+    openListText = 'Выбор в форме списка (F4)',
     openText = 'Показать список',
     options,
     PaperComponent: PaperComponentProp,
@@ -460,11 +470,10 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     value: valueProp,
     ...otherProps
   } = props;
-  let {openList = false, disableClearable, ...other} = otherProps;
+  const {openList, openObj, disableClearable, other} =
+    openHandlers({value: valueProp, options, onChange, ...otherProps});
 
-  if(typeof disableClearable !== 'boolean') {
-    disableClearable = true;
-  }
+
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   const getOptionLabel = getOptionLabelProp || defaultGetOptionLabel;
@@ -645,6 +654,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
   };
 
   const clearIndicatorSlotProps = externalForwardedProps.slotProps.clearIndicator;
+  const openListIndicatorSlotProps = externalForwardedProps.slotProps.openListIndicator;
   const popupIndicatorSlotProps = externalForwardedProps.slotProps.popupIndicator;
 
   return (
@@ -689,6 +699,10 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
                   {hasOpenListIcon ? <AutocompleteOpenListIndicator
                     aria-label={openListText}
                     title={openListText}
+                    ownerState={ownerState}
+                    {...openListIndicatorSlotProps}
+                    className={clsx(classes.openListIndicator, openListIndicatorSlotProps?.className)}
+                    onClick={openList}
                   >
                     <ListIcon />
                   </AutocompleteOpenListIndicator> : null}
@@ -757,6 +771,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
             ) : null}
             {hasOpenListIcon ? <AutocompleteFooter
               openList={openList}
+              openObj={openObj}
               openListText={openListText}
               classes={classes}
               getClearProps={getClearProps}
@@ -1192,6 +1207,7 @@ Autocomplete.propTypes /* remove-proptypes */ = {
   slotProps: PropTypes /* @typescript-to-proptypes-ignore */.shape({
     chip: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     clearIndicator: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    openListIndicator: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     listbox: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     paper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     popper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
