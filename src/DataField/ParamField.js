@@ -4,32 +4,28 @@ import Checkbox from './Checkbox';
 import Text from './Text';
 import {NumberField} from './Number';
 
-export default function ParamField({obj, fld, param, cnstr, meta, inset, label, onChange, fullWidth=true, ...other}) {
+const stub = {};
+
+export default function ParamField({obj, fld, param, meta, label, onChange, fullWidth=true, openList=true, ...other}) {
   if(!param) {
     param = obj.param;
   }
-  if(!cnstr) {
-    cnstr = obj.cnstr || 0;
-  }
-  if(!inset) {
-    inset = obj.inset;
-  }
   if(!fld) {
-    fld='value';
+    fld=param.ref;
   }
   // вычисляемые скрываем всегда
-  let hide = !param.show_calculated && param.is_calculated;
+  let hide = false;
 
   if(!meta) {
-    const {utils} = $p;
-    meta = utils._clone(obj._metadata('value'));
-    meta.type = utils._clone(param.type);
-    meta.mandatory = param.mandatory;
-    meta.synonym = label || param.caption || param.name;
+    meta = {
+      type: param.type,
+      mandatory: param.mandatory,
+      synonym: label || param.caption || param.name,
+    };
   }
-  const {types} = meta.type;
+  const {types} = param.type;
 
-  if(!meta.type.is_ref) {
+  if(!param.type.isRef) {
     let Component;
     if(types.includes('boolean')) {
       Component = Checkbox;
@@ -41,17 +37,17 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
       Component = NumberField;
     }
     if(Component) {
-      return <Component obj={obj} meta={meta} fld={fld} fullWidth={fullWidth} {...other} />;
+      return <Component obj={obj} meta={stub} fld={fld} label={meta.synonym} fullWidth={fullWidth} {...other} />;
     }
     hide = true;
   }
 
   // учтём дискретный ряд - он приоритетнее связей параметров
   let oselect = types.length === 1 && ['cat.property_values', 'cat.characteristics'].includes(types[0]);
-  const drow = inset?.product_params?.find({param});
+  const drow = null; // inset?.product_params?.find({param});
   if(drow) {
     if(!hide){
-      hide = drow.hide || obj.hide;
+      hide = drow.hide;
     }
     if(drow?.list) {
       try{
@@ -68,30 +64,25 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
   }
   if(!drow?.list) {
     // если нет умолчаний во вставке, используем связи
-    const lnk_props = {obj, grid: {selection: {cnstr, inset}}};
-    const links = param.params_links(lnk_props);
+    const lnk_props = {obj, grid: {selection: {cnstr: 0, inset: null}}};
+    const links = param.paramsLinks(lnk_props);
     // если для параметра есть связи - сокрытие по связям
-    if(!hide){
-      if(links.length) {
-        hide = links.some((link) => link.hide);
-      }
-      else {
-        hide = obj.hide;
-      }
+    if(!hide && links.length){
+      hide = links.some((link) => link.hide);
     }
     // дополним метаданные отбором
     if (links.length) {
       const values = [];
-      param.linked_values(links, null, values);
+      param.linkedValues(links, null, values);
       if(values.length) {
         if(values.length < 50) {
           oselect = true;
         }
-        if(!meta.choice_params) {
-          meta.choice_params = [];
+        if(!meta.choiceParams) {
+          meta.choiceParams = [];
         }
         // дополняем отбор
-        meta.choice_params.push({
+        meta.choiceParams.push({
           name: 'ref',
           path: {in: values.map((v) => v.value)}
         });
@@ -99,7 +90,7 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
     }
     else if(oselect && types[0] === 'cat.property_values') {
       meta.list = [];
-      $p.cat.property_values.find_rows({owner: param}, (v) => {
+      $p.cat.propertyValues.findRows({owner: param}, (v) => {
         meta.list.push(v);
       });
     }
@@ -111,6 +102,7 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
     meta={meta}
     onChange={onChange}
     fullWidth={fullWidth}
+    openList={openList}
     {...other}
   />;
 }

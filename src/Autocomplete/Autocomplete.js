@@ -25,6 +25,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/zero-styled';
 import { useDefaultProps } from '@mui/material/DefaultPropsProvider';
 import autocompleteClasses, { getAutocompleteUtilityClass } from './autocompleteClasses';
+import {AutocompleteFooter} from './Footer';
 
 const useUtilityClasses = (ownerState) => {
   const {
@@ -59,6 +60,7 @@ const useUtilityClasses = (ownerState) => {
     popupIndicator: ['popupIndicator', popupOpen && 'popupIndicatorOpen'],
     popper: ['popper', disablePortal && 'popperDisablePortal'],
     paper: ['paper'],
+    footer: ['footer'],
     listbox: ['listbox'],
     loading: ['loading'],
     noOptions: ['noOptions'],
@@ -459,9 +461,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     ...otherProps
   } = props;
   let {openList = false, disableClearable, ...other} = otherProps;
-  if(openList && typeof openList !== 'function') {
-    openList = () => alert('openList');
-  }
+
   if(typeof disableClearable !== 'boolean') {
     disableClearable = true;
   }
@@ -491,9 +491,11 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     groupedOptions,
   } = useAutocomplete({getOptionLabel, ...props, componentName: 'Autocomplete' });
 
-  const hasClearIcon = !disableClearable && !disabled && dirty && !readOnly;
-  const hasPopupIcon = (!freeSolo || forcePopupIcon === true) && forcePopupIcon !== false;
   const hasOpenListIcon = Boolean(openList);
+  const initHasClearIcon = !disableClearable && !disabled && dirty && !readOnly;
+  const hasClearIcon = initHasClearIcon && !hasOpenListIcon;
+  const hasPopupIcon = (!freeSolo || forcePopupIcon === true) && forcePopupIcon !== false;
+
 
   const { onMouseDown: handleInputMouseDown } = getInputProps();
   const { ref: listboxRef, ...otherListboxProps } = getListboxProps();
@@ -507,6 +509,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     fullWidth,
     getOptionLabel,
     hasClearIcon,
+    initHasClearIcon,
     hasOpenListIcon,
     hasPopupIcon,
     inputFocused: focusedTag === -1,
@@ -752,19 +755,16 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
                 })}
               </ListboxSlot>
             ) : null}
-            {hasOpenListIcon ? <div onMouseDown={(event) => {
-              // Prevent blur
-              event.preventDefault();
-            }}>
-              <Link
-                aria-label={openListText}
-                title={openListText}
-                onClick={openList}
-                sx={{p: 1, cursor: 'pointer', lineHeight: 2}}
-              >
-                Список
-              </Link>
-            </div> : null}
+            {hasOpenListIcon ? <AutocompleteFooter
+              openList={openList}
+              openListText={openListText}
+              classes={classes}
+              getClearProps={getClearProps}
+              clearText={clearText}
+              ownerState={ownerState}
+              clearIndicatorSlotProps={clearIndicatorSlotProps}
+              clearIcon={clearIcon}
+            /> : null}
           </AutocompletePaper>
         </AutocompletePopper>
       ) : null}

@@ -3,13 +3,13 @@ import Autocomplete from './Autocomplete';
 import {onKeyUp} from './enterTab';
 
 export const getOptions = (obj, fld, meta, value) => {
-  const {utils} = $p;
-  let mgr = value?._manager || obj._manager.value_mgr(obj, fld, meta.type);
+  const {utils, md} = $p;
+  let mgr = value?._manager || md.mgr(meta.type);
   if(Array.isArray(meta.list)) {
     return meta.list.map((v) => (utils.is ? utils.is.dataObj(v) : utils.is_data_obj(v)) ? v : mgr.get(v));
   }
   const res = [];
-  const elmOnly = meta.choice_groups_elm === 'elm';
+  const elmOnly = meta.choiceGrp === 'elm';
   for(const {name, path} of (meta.choice_params || [])) {
     if(name === 'ref') {
       if(Array.isArray(path)) {
@@ -27,12 +27,12 @@ export const getOptions = (obj, fld, meta, value) => {
     }
     // для связей параметров выбора, значение берём из объекта
     let stop;
-    for(const choice of meta.choice_links || []) {
+    for(const choice of meta.choiceLinks || []) {
       if(choice.name?.[0] == 'selection') {
         // if(choice.name[1] == 'owner' && !meta.has_owners) {
         //   continue;
         // }
-        if(utils.is_tabular(obj)) {
+        if(utils.is.tabular(obj)) {
           if(choice.path.length < 2) {
             if(o[choice.name[1]] != obj[choice.path[0]]) {
               stop = true;
