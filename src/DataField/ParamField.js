@@ -3,18 +3,19 @@ import RefField from './RefField';
 import Checkbox from './Checkbox';
 import Text from './Text';
 import {NumberField} from './Number';
+import {optionListHook, OptionList} from './OptionList';
 
 const stub = {};
 
-export default function ParamField({obj, fld, param, meta, label, onChange, fullWidth=true, openList=true, ...other}) {
+export default function ParamField({obj, fld, param, meta, label, onChange, fullWidth=true, openList: paramOpenList, ...other}) {
   if(!param) {
     param = obj.param;
   }
   if(!fld) {
-    fld=param.ref;
+    fld = param.ref;
   }
-  // вычисляемые скрываем всегда
-  let hide = false;
+
+  const [listProps, openList] = optionListHook(param, paramOpenList);
 
   if(!meta) {
     meta = {
@@ -24,7 +25,8 @@ export default function ParamField({obj, fld, param, meta, label, onChange, full
     };
   }
   const {types} = param.type;
-
+  // вычисляемые скрываем всегда
+  let hide = false;
   if(!param.type.isRef) {
     let Component;
     if(types.includes('boolean')) {
@@ -96,13 +98,16 @@ export default function ParamField({obj, fld, param, meta, label, onChange, full
     }
   }
 
-  return hide ? null : <RefField
-    obj={obj}
-    fld={fld}
-    meta={meta}
-    onChange={onChange}
-    fullWidth={fullWidth}
-    openList={openList}
-    {...other}
-  />;
+  return hide ? null : <>
+    <RefField
+      obj={obj}
+      fld={fld}
+      meta={meta}
+      onChange={onChange}
+      fullWidth={fullWidth}
+      openList={openList}
+      {...other}
+    />
+    {listProps ? <OptionList {...listProps} /> : null}
+  </>;
 }

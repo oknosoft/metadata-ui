@@ -7,8 +7,13 @@ export function openHandlers({value, options, onChange, openList = false, disabl
     disableClearable = true;
   }
 
-  if(openList && typeof openList !== 'function') {
-    openList = stub;
+  if(openList) {
+    if(typeof openList === 'function') {
+      openList = openList.bind(null, {value, options, onChange})
+    }
+    else {
+      openList = stub;
+    }
   }
 
   const openObj = openList && stub;
