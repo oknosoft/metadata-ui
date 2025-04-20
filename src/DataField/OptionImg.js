@@ -6,6 +6,7 @@ const Img = styled('img')({
   width: 150,
   maxHeight: 150,
   margin: -4,
+  cursor: 'pointer',
 });
 const ImgLarge = styled('img')({
   maxWidth: 360,

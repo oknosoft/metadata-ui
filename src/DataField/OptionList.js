@@ -1,8 +1,10 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiToolbar from '@mui/material/Toolbar';
+import Divider, { dividerClasses } from '@mui/material/Divider';
 import {styled} from '@mui/material/styles';
 import {DataGrid} from 'react-data-grid';
 import Dialog from '../App/Dialog';
@@ -42,26 +44,56 @@ const getColumns = (options) => {
 export function OptionList({value, options, onChange, param, closeList}) {
 
   const [columns, rowHeight] = getColumns(options);
-  // rows, onDoubleClick, selectedRows, setSelectedRows, columns
-  //const onCellClick = cellClick({selectedRows, setSelectedRows});
-  //const onCellKeyDown = cellKeyDown({rows, columns, onDoubleClick, setSelectedRows});
+  const [selectedRows, setSelectedRows] = React.useState(new Set([value?.valueOf()]));
 
-  const title = React.useMemo(() => <Toolbar disableGutters>
+  const onCellClick = ({row}) => {
+    if(!selectedRows.size || Array.from(selectedRows)[0] !== row.ref) {
+      setSelectedRows(new Set([row.ref]));
+    }
+  };
+
+  const selectValue = (ev) => {
+    if (selectedRows.size) {
+      onChange(ev, param.type.fetchType(Array.from(selectedRows)[0]));
+    }
+    closeList();
+  };
+
+  const {onRef, onDoubleClick} = React.useMemo(() => {
+    let scrolled = false;
+    return {
+      onRef(el) {
+        if (el && !scrolled) {
+          scrolled = true;
+          el?.scrollToCell({idx: columns.length > 1 ? 1 : 0, rowIdx: options.indexOf(value)});
+        }
+      },
+      onDoubleClick({column, row, rowIdx, selectCell}, ev) {
+        onChange(ev, row);
+        closeList();
+      }
+    }
+  }, []);
+
+  const title = <Toolbar disableGutters>
+    <Button onClick={selectValue}>Выбрать</Button>
+    <Divider orientation="vertical" variant="middle" flexItem sx={{mx: 2}} />
     {param.name}
     <Box sx={{ flex: 1}} />
     <IconButton onClick={closeList}><CloseIcon/></IconButton>
-  </Toolbar>, []);
+  </Toolbar>;
 
   return <Dialog open onClose={closeList} title={title} actions={[]} raw>
     <GridSpace>
       <DataGrid
+        ref={onRef}
         columns={columns}
         rows={options}
         rowKeyGetter={rowKeyGetter}
-        //selectedRows={selectedRows}
-        //onSelectedRowsChange={setSelectedRows}
-        //onCellClick={onCellClick}
-        //onCellDoubleClick={onDoubleClick}
+        selectedRows={selectedRows}
+        onSelectedRowsChange={setSelectedRows}
+        onCellClick={onCellClick}
+        onCellDoubleClick={onDoubleClick}
         //onCellKeyDown={onCellKeyDown}
         className="fill-grid"
         headerRowHeight={35}
