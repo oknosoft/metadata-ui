@@ -45,7 +45,6 @@ export default function ParamField({obj, fld, param, meta, label, onChange, full
   }
 
   // учтём дискретный ряд - он приоритетнее связей параметров
-  let oselect = types.length === 1 && ['cat.property_values', 'cat.characteristics'].includes(types[0]);
   const drow = null; // inset?.product_params?.find({param});
   if(drow) {
     if(!hide){
@@ -54,7 +53,6 @@ export default function ParamField({obj, fld, param, meta, label, onChange, full
     if(drow?.list) {
       try{
         meta.list = JSON.parse(drow.list);
-        oselect = true;
       }
       catch (e) {
         delete meta.list;
@@ -66,31 +64,18 @@ export default function ParamField({obj, fld, param, meta, label, onChange, full
   }
   if(!drow?.list) {
     // если нет умолчаний во вставке, используем связи
-    const lnk_props = {obj, grid: {selection: {cnstr: 0, inset: null}}};
-    const links = param.paramsLinks(lnk_props);
+    const context = obj.owner.context();
+    const links = param.paramsLinks(context);
     // если для параметра есть связи - сокрытие по связям
     if(!hide && links.length){
       hide = links.some((link) => link.hide);
     }
     // дополним метаданные отбором
     if (links.length) {
-      const values = [];
-      param.linkedValues(links, null, values);
-      if(values.length) {
-        if(values.length < 50) {
-          oselect = true;
-        }
-        if(!meta.choiceParams) {
-          meta.choiceParams = [];
-        }
-        // дополняем отбор
-        meta.choiceParams.push({
-          name: 'ref',
-          path: {in: values.map((v) => v.value)}
-        });
-      }
+      meta.list = [];
+      links.forEach((link) => link.appendValues(meta.list));
     }
-    else if(oselect && types[0] === 'cat.property_values') {
+    else if(types[0] === 'cat.property_values') {
       meta.list = [];
       $p.cat.propertyValues.findRows({owner: param}, (v) => {
         meta.list.push(v);
