@@ -4,6 +4,8 @@ import InputLabel from '@mui/material/InputLabel';
 import Input from '@mui/material/Input';
 import { NumericFormat  } from 'react-number-format';
 
+const {classes} = $p;
+
 function toAttr(meta, other={}, readOnly) {
   if('min' in meta) {
     other.min = meta.min;
@@ -130,7 +132,7 @@ export function NumberField({obj, fld, meta, label, readOnly,  fullWidth=true, o
 }
 
 export function NumberCell({row, column, onRowChange, onClose}) {
-  const obj = row instanceof $p.classes.TabularSectionRow ? row : row.row;
+  const obj = (typeof row.row !== 'object' || row instanceof classes.TabularSectionRow) ? row : row.row;
   const fld = column.key;
   const [value, setValue] = React.useState(obj[fld]);
 
@@ -151,7 +153,7 @@ export function NumberCell({row, column, onRowChange, onClose}) {
             const v = parseFloat(value);
             if(!isNaN(v) && obj[fld] != v) {
               obj[fld] = v;
-              onRowChange(row instanceof $p.classes.TabularSectionRow ? row : {...row}, true);
+              onRowChange((typeof row.row !== 'object' || row instanceof classes.TabularSectionRow) ? row : {...row}, true);
             }
             setValue(obj[fld]);
           }
@@ -173,7 +175,7 @@ export function NumberCell({row, column, onRowChange, onClose}) {
 
 export function NumberFormatter({row, column}) {
 
-  const obj = row instanceof $p.classes.TabularSectionRow ? row : row.row;
+  const obj = (typeof row.row !== 'object' || row instanceof classes.TabularSectionRow) ? row : row.row;
 
   const [value, setValue] = React.useState(obj[column.key]);
 
@@ -183,9 +185,9 @@ export function NumberFormatter({row, column}) {
         setValue(obj[column.key]);
       }
     }
-    obj._manager.on({update, rows: update});
+    obj._manager?.on({update, rows: update});
     return () => {
-      obj._manager.off({update, rows: update});
+      obj._manager?.off({update, rows: update});
     };
   }, [obj, column.key]);
 

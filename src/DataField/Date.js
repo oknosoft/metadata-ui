@@ -50,7 +50,7 @@ export default function Date({obj, fld, meta, label, labelProps, value, onChange
 
 export function DateFormatter({row, column}) {
 
-  const obj = row instanceof classes.TabularSectionRow ? row : row.row;
+  const obj = (typeof row.row !== 'object' || row instanceof classes.TabularSectionRow) ? row : row.row;
 
   const [value, setValue] = React.useState(format(obj[column.key]));
 
@@ -60,9 +60,9 @@ export function DateFormatter({row, column}) {
         setValue(format(obj[column.key]));
       }
     }
-    obj._manager.on({update, rows: update});
+    obj._manager?.on({update, rows: update});
     return () => {
-      obj._manager.off({update, rows: update});
+      obj._manager?.off({update, rows: update});
     };
   }, [obj, column.key]);
 
@@ -70,7 +70,7 @@ export function DateFormatter({row, column}) {
 }
 
 export function DateCell({row, column, onRowChange, onClose}) {
-  const obj = row instanceof classes.TabularSectionRow ? row : row.row;
+  const obj = (typeof row.row !== 'object' || row instanceof classes.TabularSectionRow) ? row : row.row;
   const fld = column.key;
   const [value, setValue] = React.useState(obj[fld]);
 

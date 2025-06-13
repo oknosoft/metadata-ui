@@ -118,6 +118,9 @@ export function PresentationFormatter ({column, row, value, isCellEditable, tabI
   if(!value) {
     value = row[column.key];
   }
+  if(column.mgr) {
+    value = column.mgr.get(value);
+  }
   let text = typeof value === 'string' ? value : (value && value.presentation) || '';
   if(text === '_') {
     text = '';
