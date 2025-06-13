@@ -21,42 +21,44 @@ export const getOptions = (obj, fld, meta, value) => {
       break;
     }
   }
-  for(const o of mgr) {
-    if(elmOnly && o.is_folder) {
-      continue;
-    }
-    // для связей параметров выбора, значение берём из объекта
-    let stop;
-    for(const choice of meta.choice_links || []) {
-      if(choice.name?.[0] == 'selection') {
-        // if(choice.name[1] == 'owner' && !meta.has_owners) {
-        //   continue;
-        // }
-        if(utils.is_tabular(obj)) {
-          if(choice.path.length < 2) {
+  if(mgr) {
+    for(const o of mgr) {
+      if(elmOnly && o.is_folder) {
+        continue;
+      }
+      // для связей параметров выбора, значение берём из объекта
+      let stop;
+      for(const choice of meta.choice_links || []) {
+        if(choice.name?.[0] == 'selection') {
+          // if(choice.name[1] == 'owner' && !meta.has_owners) {
+          //   continue;
+          // }
+          if(utils.is_tabular(obj)) {
+            if(choice.path.length < 2) {
+              if(o[choice.name[1]] != obj[choice.path[0]]) {
+                stop = true;
+                break;
+              }
+            }
+            else {
+              if(o[choice.name[1]] != obj[choice.path[1]]) {
+                stop = true;
+                break;
+              }
+            }
+          }
+          else {
             if(o[choice.name[1]] != obj[choice.path[0]]) {
               stop = true;
               break;
             }
           }
-          else {
-            if(o[choice.name[1]] != obj[choice.path[1]]) {
-              stop = true;
-              break;
-            }
-          }
-        }
-        else {
-          if(o[choice.name[1]] != obj[choice.path[0]]) {
-            stop = true;
-            break;
-          }
         }
       }
-    }
 
-    if(!stop) {
-      res.push(o);
+      if(!stop) {
+        res.push(o);
+      }
     }
   }
   return res;
