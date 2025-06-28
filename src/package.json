@@ -36,9 +36,9 @@
     "dataframe": "2.0",
     "font-awesome": "4.7.0",
     "hammerjs": "^2.0",
-    "marked": "^15.0",
+    "marked": "^16.0",
     "react": "^19.1",
-    "react-data-grid": "7.0.0-beta.54",
+    "react-data-grid": "7.0.0-beta.56",
     "react-dom": "^19.1"
   },
   "scripts": {
