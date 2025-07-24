@@ -75,12 +75,14 @@ const styles = theme => ({
       ...theme.typography.headline,
       color: theme.palette.text.secondary,
       margin: '1em 0 0.7em',
+      fontWeight: 500,
       ...anchorLinkStyle(theme, 16),
     },
     '& h4': {
       ...theme.typography.title,
       color: theme.palette.text.secondary,
       margin: '1em 0 0.7em',
+      fontWeight: 500,
       ...anchorLinkStyle(theme, 14),
     },
     '& p, & ul, & ol': {
