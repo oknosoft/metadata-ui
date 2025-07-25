@@ -9,7 +9,7 @@ import MarkdownComponents from './MarkdownComponents';
 import {getContents, getHeaders, getTitle, componentRegExp} from './parseMarkdown';
 
 export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr, canonical, footer,
-                               setTitle, TopButton, opt, components = {}}) {
+                               setTitle, TopButton, opt, sx, components = {}}) {
 
   const contents = getContents(markdown);
   let ltitle = htitle;
@@ -18,7 +18,10 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
     ltitle = headers?.title;
   }
   if(!ltitle) {
-    ltitle = `${getTitle(markdown)}${subtitle ? ' - ' + subtitle : ''}`;
+    ltitle = getTitle(markdown);
+  }
+  if(subtitle) {
+    ltitle += ` - ${subtitle}`;
   }
 
   React.useEffect(() => {
@@ -30,7 +33,7 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
   }, [markdown]);
 
   return (
-    <Box mt={1} ml={1} mb={8}>
+    <Box sx={{mt: 1, ml: 1, mb: 6, ...sx}}>
       <Helmet title={ltitle}>
         <meta name="description" content={descr || h1} />
         {canonical && <link rel="canonical" href={canonical} />}

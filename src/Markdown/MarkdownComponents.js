@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function MarkdownComponents({text, components}) {
 
-  const xml = new DOMParser().parseFromString(text.substring(1, text.length -2),"text/xml");
+  const xml = new DOMParser().parseFromString(text.substring(1, text.length -1),"text/xml");
   const elm = xml && xml.firstElementChild;
   if(elm) {
     const {tagName, attributes, children} = elm;
