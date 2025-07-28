@@ -69,13 +69,14 @@ const styles = theme => ({
       ...theme.typography.display1,
       color: theme.palette.text.secondary,
       margin: '1em 0 0.7em',
+      fontWeight: 300,
       ...anchorLinkStyle(theme, 18),
     },
     '& h3': {
       ...theme.typography.headline,
       color: theme.palette.text.secondary,
       margin: '1em 0 0.7em',
-      fontWeight: 500,
+      fontWeight: 400,
       ...anchorLinkStyle(theme, 16),
     },
     '& h4': {
