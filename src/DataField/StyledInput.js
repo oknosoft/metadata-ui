@@ -11,7 +11,7 @@ export default function StyledInput ({inputProps, InputProps, InputLabelProps, l
 }
 
 export function CellInput ({inputProps: {className, ...inputProps}, InputProps, id, placeholder, fullWidth, ...other}) {
-  inputProps.className = `rdg-text-editor tlmcuo07-0-0-beta-56 ${className}`;
+  inputProps.className = `rdg-text-editor tlmcuo07-0-0-beta-57 ${className}`;
   return <Input
     classes={{root: "cell-input"}}
     placeholder={placeholder}

@@ -75,7 +75,7 @@ export function TextCell({row, column, onRowChange, onClose}) {
 
   return <input
     ref={autoFocusAndSelect}
-    className="rdg-text-editor tlmcuo07-0-0-beta-56"
+    className="rdg-text-editor tlmcuo07-0-0-beta-57"
     value={value}
     onChange={({target}) => {
       setValue(target.value);
