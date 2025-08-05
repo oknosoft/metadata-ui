@@ -89,6 +89,9 @@ const styles = theme => ({
     '& p, & ul, & ol': {
       lineHeight: 1.6,
     },
+    '& ul': {
+      paddingInlineStart: theme.spacing(2),
+    },
     '& img': {
       maxWidth: '100%',
     },
