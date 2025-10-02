@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTitleContext} from '../App/titleContext';
 import {useBackdropContext} from '../App/backdropContext';
-import {useParams, unstable_usePrompt as usePrompt} from 'react-router-dom'; // https://www.npmjs.com/package/react-router-prompt
+import {useParams, unstable_usePrompt as usePrompt} from 'react-router'; // https://www.npmjs.com/package/react-router-prompt
 
 const {wsql, job_prm} = $p;
 

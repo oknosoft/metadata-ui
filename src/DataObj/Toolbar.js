@@ -7,7 +7,7 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import SettingsIcon from '@mui/icons-material/DisplaySettings';
 import CloseIcon from '@mui/icons-material/Close';
 import CalculateIcon from '@mui/icons-material/Calculate';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import { snakeCase } from "snake-case";
 import {ListSubheader} from './styled';
 import {Toolbar, HtmlTooltip} from '../App/styled';

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import {marked} from 'marked';
 import {baseUrl as pluginBaseUrl} from 'marked-base-url';
 
