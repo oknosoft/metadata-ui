@@ -29,24 +29,28 @@ export default function ParamField({obj, fld, param, cnstr, meta, inset, label, 
   }
   const {types} = meta.type;
 
-  if(!meta.type.is_ref || (types.length === 2 && types.includes('cat.values_options'))) {
-    let Component;
-    if(types.includes('boolean')) {
-      Component = Checkbox;
+  let {Component} = param;
+  if(!Component) {
+    if(!meta.type.is_ref || (types.length === 2 && types.includes('cat.values_options'))) {
+      if(types.includes('boolean')) {
+        Component = Checkbox;
+      }
+      else if(types.includes('string')) {
+        Component = Text;
+      }
+      if(types.includes('number')) {
+        Component = NumberField;
+      }
+      if(!Component) {
+        const type = types.find(v => v!== 'cat.values_options');
+        if(!type || !type.includes('.')) {
+          hide = true;
+        }
+      }
     }
-    else if(types.includes('string')) {
-      Component = Text;
-    }
-    if(types.includes('number')) {
-      Component = NumberField;
-    }
-    if(Component) {
-      return <Component obj={obj} meta={meta} fld={fld} fullWidth={fullWidth} {...other} />;
-    }
-    const type = types.find(v => v!== 'cat.values_options');
-    if(!type || !type.includes('.')) {
-      hide = true;
-    }
+  }
+  if(Component) {
+    return <Component obj={obj} meta={meta} fld={fld} fullWidth={fullWidth} {...other} />;
   }
 
   // учтём дискретный ряд - он приоритетнее связей параметров
