@@ -118,8 +118,20 @@ export function PresentationFormatter ({column, row, value, isCellEditable, tabI
   if(!value) {
     value = row[column.key];
   }
-  if(column.mgr) {
-    value = column.mgr.get(value);
+  const {mgr} = column;
+  if(mgr) {
+    if(Array.isArray(mgr)) {
+      for(const item of mgr) {
+        const test = item.by_ref[value];
+        if(test) {
+          value = test;
+          break;
+        }
+      }
+    }
+    else {
+      value = mgr.get(value);
+    }
   }
   let text = typeof value === 'string' ? value : (value && value.presentation) || '';
   if(text === '_') {
