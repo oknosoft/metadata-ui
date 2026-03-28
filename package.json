@@ -26,7 +26,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4",
     "cross-env": "^10.1",
     "deep-equal": "^2.2.3",
-    "framer-motion": "^12.23",
+    "framer-motion": "^12.38",
     "md5-file": "^5.0",
     "shallowequal": "^1.1.0",
     "typescript": "^5.9"

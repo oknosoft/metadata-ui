@@ -9,7 +9,7 @@ import MarkdownComponents from './MarkdownComponents';
 import {getContents, getHeaders, getTitle, componentRegExp} from './parseMarkdown';
 
 export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr, canonical, footer,
-                               setTitle, TopButton, opt, sx, components = {}}) {
+                               setTitle, titleBtns, TopButton, opt, sx, components = {}}) {
 
   const contents = getContents(markdown);
   let ltitle = htitle;
@@ -26,9 +26,9 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
 
   React.useEffect(() => {
     if(ltitle) {
-      setTitle({
-        appTitle: <Typography variant="h6" noWrap sx={{flex: 1}} component="div" >{ltitle}</Typography>,
-      });
+      const baseTitle = <Typography variant="h6" noWrap sx={{flex: 1}} component="div" >{ltitle}</Typography>;
+      const appTitle = titleBtns ? <>{baseTitle}{titleBtns}</> : baseTitle;
+      setTitle({appTitle});
     }
   }, [markdown]);
 
@@ -44,7 +44,7 @@ export function MarkdownDocs({markdown, subtitle, title, htitle, h1, img, descr,
 
       {
         h1 && <Box sx={{display: 'flex'}}>
-          <Typography variant="h4" component="h1" color="primary" sx={{width: '100%'}}>{h1}</Typography>
+          <Typography variant="h4" component="h1" color="primary" sx={{flex: 1}}>{h1}</Typography>
           {TopButton}
         </Box>
       }
