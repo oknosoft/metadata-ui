@@ -10,20 +10,32 @@ export const getOptions = (obj, fld, meta, value) => {
   }
   const res = [];
   const elmOnly = meta.choice_groups_elm === 'elm';
-  for(const {name, path} of (meta.choice_params || [])) {
-    if(name === 'ref') {
-      if(Array.isArray(path)) {
-        mgr = path.map(ref => mgr.get(ref));
+  if(!mgr) {
+    for(const {name, path} of (meta.choice_params || [])) {
+      if(name === 'ref') {
+        if(Array.isArray(path)) {
+          mgr = path.map(ref => mgr.get(ref));
+        }
+        else if(Array.isArray(path.in)) {
+          mgr = path.in.map(ref => mgr.get(ref));
+        }
+        break;
       }
-      else if(Array.isArray(path.in)) {
-        mgr = path.in.map(ref => mgr.get(ref));
-      }
-      break;
+    }
+  }
+  let cond;
+  if(meta.choice_params?.length) {
+    cond = [];
+    for(const {name, path} of meta.choice_params) {
+      cond.push({name, path: Array.isArray(path) ? path : (Array.isArray(path.in) ? path.in : [])});
     }
   }
   if(mgr) {
     for(const o of mgr) {
       if(elmOnly && o.is_folder) {
+        continue;
+      }
+      if(cond && cond.some(({name, path}) => !path.includes(o[name]))) {
         continue;
       }
       // для связей параметров выбора, значение берём из объекта
