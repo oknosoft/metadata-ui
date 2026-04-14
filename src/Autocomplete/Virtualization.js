@@ -4,7 +4,7 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Popper from '@mui/material/Popper';
 import { useTheme, styled } from '@mui/material/styles';
-import { VariableSizeList } from 'react-window';
+import { List } from 'react-window';
 import Typography from '@mui/material/Typography';
 
 const LISTBOX_PADDING = 8; // px
@@ -79,7 +79,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
   return (
     <div ref={ref}>
       <OuterElementContext.Provider value={other}>
-        <VariableSizeList
+        <List
           itemData={itemData}
           height={getHeight() + 2 * LISTBOX_PADDING}
           width="100%"
@@ -91,7 +91,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
           itemCount={itemCount}
         >
           {renderRow}
-        </VariableSizeList>
+        </List>
       </OuterElementContext.Provider>
     </div>
   );
