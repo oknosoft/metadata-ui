@@ -310,6 +310,7 @@ const dialogs = {
         this.handleIfaceState({
           wnd_portal: {
             open: true,
+            stamp: Date.now(),
             Component,
             obj,
             title,

@@ -37,6 +37,13 @@ export default class WindowPortal extends React.PureComponent {
     super(props);
     this.externalWindow = null;
     this.state = {containerEl: null};
+    this.beforeunload = () => {
+      if(this.externalWindow) {
+        this.externalWindow = null;
+        Promise.resolve().then(() => this.props.handleClose());
+      }
+    };
+    this.print = () => Promise.resolve().then(() => this.externalWindow && this.externalWindow.print());
   }
 
   componentDidMount() {
@@ -55,12 +62,7 @@ export default class WindowPortal extends React.PureComponent {
 
       // update the state in the parent component if the user closes the
       // new window
-      this.externalWindow.addEventListener('beforeunload', () => {
-        if(this.externalWindow) {
-          this.externalWindow = null;
-          Promise.resolve().then(() => this.props.handleClose());
-        }
-      });
+      this.externalWindow.addEventListener('beforeunload', this.beforeunload);
 
       this.setState({containerEl}, () => {
         this.externalWindow && !this.skip_css && this.copyStyles();
@@ -80,8 +82,19 @@ export default class WindowPortal extends React.PureComponent {
     this.externalWindow && this.externalWindow.close();
   }
 
-  print = () => {
-    return Promise.resolve().then(() => this.externalWindow && this.externalWindow.print());
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if(nextState !== this.state) {
+      return true;
+    }
+    if(this.externalWindow && (
+      nextProps.Component !== this.props.Component ||
+      nextProps.obj !== this.props.obj ||
+      nextProps.stamp !== this.props.stamp)) {
+      this.externalWindow.removeEventListener('beforeunload', this.beforeunload);
+      this.externalWindow.close();
+      this.componentDidMount();
+    }
+    return false;
   }
 
   skipCss = () => {
@@ -107,9 +120,9 @@ export default class WindowPortal extends React.PureComponent {
 
     // Append props.children to the container <div> in the new window
     return ReactDOM.createPortal(Component ?
-      <Component 
+      <Component
         print={this.print}
-        obj={obj} 
+        obj={obj}
         attr={attr}
         skipCss={this.skipCss}
         copyStyles={this.copyStyles}
