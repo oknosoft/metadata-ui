@@ -23,19 +23,14 @@ export const getOptions = (obj, fld, meta, value) => {
       }
     }
   }
-  let cond;
-  if(meta.choice_params?.length) {
-    cond = [];
-    for(const {name, path} of meta.choice_params) {
-      cond.push({name, path: Array.isArray(path) ? path : (Array.isArray(path.in) ? path.in : [])});
-    }
-  }
   if(mgr) {
     for(const o of mgr) {
       if(elmOnly && o.is_folder) {
         continue;
       }
-      if(cond && cond.some(({name, path}) => !path.includes(o[name]))) {
+      if(meta.choice_params?.some(({name, path}) =>
+        Array.isArray(path) ? !path.includes(o[name]) : (
+          Array.isArray(path.in) ? !path.in.includes(o[name]) : path != o[name]))) {
         continue;
       }
       // для связей параметров выбора, значение берём из объекта
