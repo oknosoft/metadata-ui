@@ -2,7 +2,7 @@ import { createFilterOptions } from '@mui/material/Autocomplete';
 
 const {adapters: {pouch}, ui: {dialogs}, cat: {partners}, utils} = $p;
 
-const filter = createFilterOptions({
+export const filter = createFilterOptions({
   stringify(v) {
     return `${v.name}-${v.inn}`;
   }
@@ -23,14 +23,19 @@ export const filterOptions = (options, params) => {
   return filtered;
 };
 
-export const getOptions = (obj, fld, meta) => {
+export const getOptions = (obj, fld, meta, list) => {
   return () => {
     const res = [];
-    for(const o of partners) {
-      if(!o.is_buyer || o.is_folder) {
-        continue;
+    if(list?.length) {
+      res.push(...list.map(ref => partners.get(ref)));
+    }
+    else {
+      for(const o of partners) {
+        if(!o.is_buyer || o.is_folder) {
+          continue;
+        }
+        res.push(o);
       }
-      res.push(o);
     }
     return res;
   };

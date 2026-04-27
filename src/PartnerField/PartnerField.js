@@ -1,12 +1,12 @@
 import React from 'react';
 import Autocomplete from '../DataField/Autocomplete';
 import {onKeyUp} from '../DataField/enterTab';
-import {filterOptions, getOptions} from './data';
+import {filter, filterOptions, getOptions} from './data';
 import DialogCreate from './DialogCreate';
 
 const {adapters: {pouch}, ui: {dialogs}, cat: {partners}, utils} = $p;
 
-export default function PartnerField({obj, fld, meta, label, onChange, fullWidth=true, enterTab, ...other}) {
+export default function PartnerField({obj, fld, meta, label, onChange, fullWidth=true, enterTab, disabled, list, ...other}) {
 
   let [value, setValue] = React.useState();
   if(value === undefined && obj && fld) {
@@ -25,7 +25,7 @@ export default function PartnerField({obj, fld, meta, label, onChange, fullWidth
     setValue(obj[fld]);
   };
 
-  const options = React.useMemo(getOptions(obj, fld, meta), [obj]);
+  const options = React.useMemo(getOptions(obj, fld, meta, list), [obj]);
 
   if(enterTab && !other.onKeyUp) {
     other.onKeyUp = function (ev) {
@@ -108,7 +108,7 @@ export default function PartnerField({obj, fld, meta, label, onChange, fullWidth
     <Autocomplete
       options={options}
       onChange={handleChange}
-      filterOptions={filterOptions}
+      filterOptions={disabled ? filter : filterOptions}
       value={value}
       label={label}
       fullWidth={fullWidth}
