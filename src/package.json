@@ -34,8 +34,8 @@
   "peerDependencies": {
     "@emotion/react": "^11.14",
     "@emotion/styled": "^11.14",
-    "@mui/icons-material": "^9.0",
-    "@mui/material": "^9.0",
+    "@mui/icons-material": "^7.3",
+    "@mui/material": "^7.3",
     "clsx": "^2.1",
     "dataframe": "2.0",
     "font-awesome": "4.7.0",
