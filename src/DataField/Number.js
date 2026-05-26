@@ -181,13 +181,16 @@ export function NumberFormatter({row, column}) {
 
   React.useEffect(() => {
     function update (curr, flds){
-      if(obj.equals?.(curr) || curr === obj || curr === obj?._owner?._owner) {
+      if(obj.equals?.(curr) || curr === obj) {
         setValue(obj[column.key]);
       }
     }
-    obj._manager?.on({update, rows: update});
+    if(obj[column.key] !== value) {
+      setValue(obj[column.key]);
+    }
+    obj._manager?.on({update});
     return () => {
-      obj._manager?.off({update, rows: update});
+      obj._manager?.off({update});
     };
   }, [obj, column.key]);
 
