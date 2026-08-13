@@ -125,19 +125,21 @@ export function PresentationFormatter ({column, row, value, isCellEditable, tabI
   if(!value) {
     value = row[column.key];
   }
-  const {mgr} = column;
-  if(mgr) {
-    if(Array.isArray(mgr)) {
-      for(const item of mgr) {
-        const test = item.by_ref[value];
-        if(test) {
-          value = test;
-          break;
+  if(!$p.utils.is_data_obj(value)) {
+    const {mgr} = column;
+    if(mgr) {
+      if(Array.isArray(mgr)) {
+        for(const item of mgr) {
+          const test = item?.by_ref?.[value];
+          if(test) {
+            value = test;
+            break;
+          }
         }
       }
-    }
-    else {
-      value = mgr.get(value);
+      else {
+        value = mgr.get(value);
+      }
     }
   }
   let text = typeof value === 'string' ? value : (value && value.presentation) || '';
